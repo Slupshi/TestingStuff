@@ -22,7 +22,7 @@ namespace TestingStuff
             Program lloyd = new Program() { Name = "Lloyd", EarSize = 40 };
             Program lucinda = new Program() { Name = "Lucinda", EarSize = 33 };
 
-            Console.WriteLine("Press 1 for Lloyd, 2 for Lucinda, 3 to swap, 4 to exit");
+            Console.WriteLine("Press 1 for Lloyd, 2 for Lucinda, 3 to swap, 9 to exit");
 
             while (true)
             {
@@ -48,7 +48,7 @@ namespace TestingStuff
                     lloyd = swap;
                     Console.WriteLine("References have been swapped");
                 }
-                else if (input == '4')
+                else if (input == '9')
                 {
                     return;
                 }
@@ -66,11 +66,18 @@ namespace TestingStuff
             Console.WriteLine("My ears are " + EarSize + " tall.");
         }
 
+        //===============================================================================
+        public void HearMessage(string message, Program whoSaidIt)
+        {
+            Console.WriteLine(Name + " heard a message");
+            Console.WriteLine(whoSaidIt.Name + " said this: " + message);
+        }
 
-
-
-
-
+        public void SpeakTo(Program whoToTalkTo, string message)
+        {
+            whoToTalkTo.HearMessage(message, this);
+        }
+        //===============================================================================
 
 
 
