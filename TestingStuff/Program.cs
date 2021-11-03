@@ -255,5 +255,16 @@ namespace TestingStuff
         {
             whoToTalkTo.HearMessage(message, this);
         }
-    }
-}
+
+
+
+
+
+
+
+
+
+
+
+    } //Fin de la class
+}     //Fin du namespace
