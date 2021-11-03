@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace TestingStuff
 {
@@ -8,104 +9,95 @@ namespace TestingStuff
 
         static void Main(string[] args)
         {
-            Elephant();
 
-
+            Console.WriteLine("Press 1 for the StatsCalculator, 2 for the SwordDamageCalculator, 3 for Elephant");
+            Console.WriteLine("Press 9 to exit");
+            char input = Console.ReadKey(true).KeyChar;
+            if (input == '1') { Console.Clear(); TestCalculator(); }
+            else if (input == '2') { Console.Clear(); SwordDamage(); }
+            else if (input == '3') { Console.Clear(); Elephant(); }
+            else if (input == '9') return;
         }
 
-        public int EarSize;
-        public string Name;
-        public bool IsSwapped = false;
 
-        public static void Elephant()
+        //===============================================================================//
+        //                               Sword Damage                                    //
+        //===============================================================================//
+
+        public const int BASE_DAMAGE = 3;
+        public const int FLAME_DAMAGE = 2;
+        public int Roll;
+        public decimal MagicMultiplier = 1M;
+        public int FlamingDamage = 0;
+        public int Damage;
+
+        public void CalculateDamage()
         {
-            Program lloyd = new Program() { Name = "Lloyd", EarSize = 40 };
-            Program lucinda = new Program() { Name = "Lucinda", EarSize = 33 };
+            Damage = (int)(Roll * MagicMultiplier) + BASE_DAMAGE + FlamingDamage;
+        }
 
-            Console.WriteLine("Press 1 for Lloyd, 2 for Lucinda, 3 to swap, 9 to exit");
-
-            while (true)
+        public void SetMagic(bool isMagic)
+        {
+            if (isMagic)
             {
+                MagicMultiplier = 1.75M;
+            }
+            else
+            {
+                MagicMultiplier = 1M;
+            }
+            CalculateDamage();
+        }
 
-                char input = Console.ReadKey(true).KeyChar;
-                if (input == '1')
-                {
-                    Console.WriteLine("You pressed 1");
-                    Console.WriteLine("Calling Lloyd");
-                    lloyd.WhoAmI();
-                }
-                else if (input == '2')
-                {
-                    Console.WriteLine("You pressed 2");
-                    Console.WriteLine("Calling Lucinda");
-                    lucinda.WhoAmI();
-                }
-                else if (input == '3')
-                {
-                    Console.WriteLine("You pressed 3");
-                    Program swap = lucinda;
-                    lucinda = lloyd;
-                    lloyd = swap;
-                    Console.WriteLine("References have been swapped");
-                }
-                else if (input == '9')
-                {
-                    return;
-                }
-                else
-                {
-                    Console.WriteLine("Wrong button dumbass !");
-                }
-
+        public void SetFlaming(bool isFlaming)
+        {
+            CalculateDamage();
+            if (isFlaming)
+            {
+                Damage += FLAME_DAMAGE;
             }
         }
 
-        public void WhoAmI()
+        public static void SwordDamage()
         {
-            Console.WriteLine("My name is " + Name);
-            Console.WriteLine("My ears are " + EarSize + " tall.");
+            Random random = new Random();
+            Program ironSword = new Program();
+            while (true)
+            {
+                Console.WriteLine("Welcome to the Sword's Damage Calculatron 2000, use the Y or N keys, other keys will close the program !");
+                ironSword.Roll = random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
+                Console.WriteLine("Is your sword Magic ? [Y/N]");
+                char input = Console.ReadKey(true).KeyChar;
+                if (input == 'y' || input == 'Y') { ironSword.SetMagic(true); Console.WriteLine("Your sword is now Magic"); }
+                else if (input == 'n' || input == 'N') { ironSword.SetMagic(false); Console.WriteLine("Your sword is not Magic"); }
+                else return;
+
+                Console.WriteLine("Is your sword Flaming ? [Y/N]");
+                input = Console.ReadKey(true).KeyChar;
+                if (input == 'y' || input == 'Y') { ironSword.SetFlaming(true); Console.WriteLine("Your sword is now Flaming"); }
+                else if (input == 'n' || input == 'N') { ironSword.SetFlaming(false); Console.WriteLine("Your sword is not Flaming"); }
+                else return;
+                Console.WriteLine("Calculating your damages");
+                Thread.Sleep(300);
+                Console.WriteLine("Calculating your damages .");
+                Thread.Sleep(300);
+                Console.WriteLine("Calculating your damages ..");
+                Thread.Sleep(300);
+                Console.WriteLine("Calculating your damages ...");
+                Thread.Sleep(300);
+                Console.WriteLine("The dices rolled " + ironSword.Roll + " for a total of " + ironSword.Damage + " HP");
+                Console.WriteLine("Press Q to quit, any other key to continue");
+                input = Console.ReadKey(true).KeyChar;
+                if ((input == 'Q') || (input == 'q')) return;
+                Console.Clear();
+            }
+
         }
 
-        //===============================================================================
-        public void HearMessage(string message, Program whoSaidIt)
-        {
-            Console.WriteLine(Name + " heard a message");
-            Console.WriteLine(whoSaidIt.Name + " said this: " + message);
-        }
 
-        public void SpeakTo(Program whoToTalkTo, string message)
-        {
-            whoToTalkTo.HearMessage(message, this);
-        }
-        //===============================================================================
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        //===============================================================================//
+        //                                Stats Calculator                               //  
+        //===============================================================================//
 
         private static void TestCalculator()
         {
@@ -187,6 +179,81 @@ namespace TestingStuff
             {
                 Score = added;
             }
+        }
+
+        //===============================================================================//
+        //                                    ELEPHANT                                   //
+        //===============================================================================//
+
+        public int EarSize;
+        public string Name;
+        public bool IsSwapped = false;
+
+        public static void Elephant()
+        {
+            Program lloyd = new Program() { Name = "Lloyd", EarSize = 40 };
+            Program lucinda = new Program() { Name = "Lucinda", EarSize = 33 };
+
+            Console.WriteLine("Press 1 for Lloyd, 2 for Lucinda, 3 to swap, 4 to send a message");
+            Console.WriteLine("Press 9 to exit");
+
+            while (true)
+            {
+
+                char input = Console.ReadKey(true).KeyChar;
+                if (input == '1')
+                {
+                    Console.WriteLine("You pressed 1");
+                    Console.WriteLine("Calling Lloyd");
+                    lloyd.WhoAmI();
+                }
+                else if (input == '2')
+                {
+                    Console.WriteLine("You pressed 2");
+                    Console.WriteLine("Calling Lucinda");
+                    lucinda.WhoAmI();
+                }
+                else if (input == '3')
+                {
+                    Console.WriteLine("You pressed 3");
+                    Program swap = lucinda;
+                    lucinda = lloyd;
+                    lloyd = swap;
+                    Console.WriteLine("References have been swapped");
+                }
+                else if (input == '4')
+                {
+                    Console.WriteLine("You pressed 4");
+                    lucinda.SpeakTo(lloyd, "Hi, Lloyd!");
+                }
+                else if (input == '9')
+                {
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("Wrong button dumbass !");
+                }
+
+            }
+        }
+
+        public void WhoAmI()
+        {
+            Console.WriteLine("My name is " + Name);
+            Console.WriteLine("My ears are " + EarSize + " tall.");
+        }
+
+
+        public void HearMessage(string message, Program whoSaidIt)
+        {
+            Console.WriteLine(Name + " heard a message");
+            Console.WriteLine(whoSaidIt.Name + " said this: " + message);
+        }
+
+        public void SpeakTo(Program whoToTalkTo, string message)
+        {
+            whoToTalkTo.HearMessage(message, this);
         }
     }
 }
