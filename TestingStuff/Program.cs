@@ -7,18 +7,44 @@ namespace TestingStuff
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Press 1 for the StatsCalculator, 2 for the SwordDamageCalculator, 3 for Elephant");
+            Console.WriteLine("Press 1 for the StatsCalculator, 2 for the SuperCalculator 3090Super, 3 for Elephant");
             Console.WriteLine("Press 4 for the Hi - Lo game, 5 for PaintballGun, 6 for QuizzMaths ");
-            Console.WriteLine("Press 7 to ArrowDamageCalculator");
+
             Console.WriteLine("Press 9 to exit");
             char input = Console.ReadKey(true).KeyChar;
             if (input == '1') { Console.Clear(); Calculator.TestCalculator(); }
-            else if (input == '2') { Console.Clear(); Sword.SwordDamage(); }
+            else if (input == '2') { Console.Clear(); DamageCalculator(); }
             else if (input == '3') { Console.Clear(); Elephant.Elephanto(); }
             else if (input == '4') { Console.Clear(); StaticProgram.HiLogame(); }
             else if (input == '5') { Console.Clear(); MachineGun.PaintballGun(); }
             else if (input == '6') { Console.Clear(); Q.QuizzMaths(); }
+
             else if (input == '9') return;
+            else { Console.WriteLine("ARE YOU DUMB ??"); }
+        }
+
+        //===============================================================================//
+        //                              Damages Calculator                               //
+        //===============================================================================//
+
+        private static void DamageCalculator()
+        {
+            Console.WriteLine("Press S to use a Sword, A to use an Arrow");
+            Console.WriteLine("Any other key to quit");
+            char weaponKey = Char.ToUpper(Console.ReadKey().KeyChar);
+            switch (weaponKey)
+            {
+                case 'S':
+                    Console.Clear();
+                    Sword.SwordDamage();
+                    break;
+                case 'A':
+                    Console.Clear();
+                    Arrow.ArrowDamage();
+                    break;
+                default:
+                    return;
+            }
         }
 
         //===============================================================================//
@@ -27,7 +53,99 @@ namespace TestingStuff
         //Class Arrow//
         class Arrow
         {
+            public Arrow(int startingRoll)
+            {
+                roll = startingRoll;
+                ArrowCalculateDamage();
+            }
 
+            private const decimal BASE_MULTIPLIER = 0.35M;
+            private const decimal MAGIC_MULTIPLIER = 2.5M;
+            private const decimal FLAME_DAMAGE = 1.25M;
+            private int roll = 0;
+            public int Roll
+            {
+                get { return roll; }
+                set { roll = value; ArrowCalculateDamage(); }
+            }
+
+            public int Damage { get; private set; }
+            public bool isMagic = false;
+            public bool isFlaming = false;
+
+            private void ArrowCalculateDamage()
+            {
+                decimal baseDamage = Roll * BASE_MULTIPLIER;
+                if (Magic) baseDamage *= MAGIC_MULTIPLIER;
+                if (Flaming) Damage = (int)Math.Ceiling(baseDamage + FLAME_DAMAGE);
+                else Damage = (int)Math.Ceiling(baseDamage);
+            }
+
+            private bool magic;
+            public bool Magic
+            {
+                get { return magic; }
+                set { magic = value; ArrowCalculateDamage(); }
+            }
+
+            private bool flaming;
+            public bool Flaming
+            {
+                get { return flaming; }
+                set { flaming = value; ArrowCalculateDamage(); }
+            }
+
+            private static int ArrowRollDice(int numberOfRolls)
+            {
+                int diceRolled = 0;
+                Random random = new Random();
+                for (int j = 1; j <= numberOfRolls; j++)
+                {
+                    diceRolled += random.Next(1, 7);
+                }
+                return diceRolled;
+            }
+
+            public static void ArrowDamage()
+            {
+
+                int numberOfRolls = 0;
+                Arrow arrow = new Arrow(ArrowRollDice(numberOfRolls));
+                while (true)
+                {
+                    Console.WriteLine("Welcome to the Arrow's Damage Calculatron 2000, use the Y or N keys, other keys will close the program !");
+                    Console.Write("How many dices do you want to roll ? ");
+                    if (int.TryParse(Console.ReadLine(), out numberOfRolls))
+                        arrow.Roll = ArrowRollDice(numberOfRolls);
+                    Console.WriteLine("Is your arrow Magic ? [Y/N]");
+                    char input = Console.ReadKey(true).KeyChar;
+                    if (input == 'y' || input == 'Y') { arrow.Magic = true; Console.WriteLine("Your arrow is now Magic"); }
+                    else if (input == 'n' || input == 'N') { arrow.Magic = false; Console.WriteLine("Your arrow is not Magic"); }
+
+                    else return;
+
+                    Console.WriteLine("Is your arrow Flaming ? [Y/N]");
+                    input = Console.ReadKey(true).KeyChar;
+                    if (input == 'y' || input == 'Y') { arrow.Flaming = true; Console.WriteLine("Your arrow is now Flaming"); }
+                    else if (input == 'n' || input == 'N') { arrow.Flaming = false; Console.WriteLine("Your arrow is not Flaming"); }
+
+                    else return;
+                    Console.WriteLine("Calculating your damages");
+                    Thread.Sleep(300);
+                    Console.WriteLine("Calculating your damages .");
+                    Thread.Sleep(300);
+                    Console.WriteLine("Calculating your damages ..");
+                    Thread.Sleep(300);
+                    Console.WriteLine("Calculating your damages ...");
+                    Thread.Sleep(300);
+                    Console.WriteLine("The dices rolled " + arrow.Roll + " for a total of " + arrow.Damage + " HP");
+                    Console.WriteLine("Press Q to quit, any other key to continue");
+                    input = Console.ReadKey(true).KeyChar;
+                    if ((input == 'Q') || (input == 'q')) return;
+                    Console.Clear();
+                }
+
+            }
 
 
 
