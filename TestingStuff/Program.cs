@@ -9,8 +9,8 @@ namespace TestingStuff
         {
             Console.WriteLine("Press 1 for the StatsCalculator, 2 for the SuperCalculator 3090Super, 3 for Elephant");
             Console.WriteLine("Press 4 for the Hi - Lo game, 5 for PaintballGun, 6 for QuizzMaths ");
-
-            Console.WriteLine("Press 9 to exit");
+            Console.WriteLine("Press 7 to TestBird, 8 for Safe");
+            Console.WriteLine("Press * to exit");
             char input = Console.ReadKey(true).KeyChar;
             if (input == '1') { Console.Clear(); Calculator.TestCalculator(); }
             else if (input == '2') { Console.Clear(); DamageCalculator(); }
@@ -18,8 +18,10 @@ namespace TestingStuff
             else if (input == '4') { Console.Clear(); StaticProgram.HiLogame(); }
             else if (input == '5') { Console.Clear(); MachineGun.PaintballGun(); }
             else if (input == '6') { Console.Clear(); Q.QuizzMaths(); }
+            else if (input == '7') { Console.Clear(); Heritage.TestHeritage(); }
+            else if (input == '8') { Console.Clear(); Safe.Vault(); }
 
-            else if (input == '9') return;
+            else if (input == '*') return;
             else { Console.WriteLine("ARE YOU DUMB ??"); }
         }
 
@@ -549,6 +551,69 @@ namespace TestingStuff
                 }
             }
         } //Fin de la class MachineGun
+
+        //===============================================================================//
+        //                                Coffre-Fort                                    //
+        //===============================================================================//
+
+        //Nouvelle clas Safe
+        class Safe
+        {
+
+            public static void Vault()
+            {
+                SafeOwner owner = new SafeOwner();
+                Safe safe = new Safe();
+                JewelThief jewelThief = new JewelThief();
+                jewelThief.OpenSafe(safe, owner);
+                Console.ReadKey(true);
+            }
+            private string contents = "precious jewels";
+            private string safeCombination = "12345";
+            public string Open(string combination)
+            {
+                if (combination == safeCombination) return contents;
+                return "";
+            }
+            public void PickLock(Locksmith lockpicker)
+            {
+                lockpicker.Combination = safeCombination;
+            }
+        }//FIn de la class Safe
+        class SafeOwner
+        {
+            private string valuables = "";
+            public void ReceiveContents(string safeContents)
+            {
+                valuables = safeContents;
+                Console.WriteLine($"Thank you for returning my {valuables}!");
+            }
+        }//FIn de la class SafeOwner
+        class Locksmith
+        {
+            public void OpenSafe(Safe safe, SafeOwner owner)
+            {
+                safe.PickLock(this);
+                string safeContents = safe.Open(Combination);
+                ReturnContents(safeContents, owner);
+            }
+            public string Combination { private get; set; }
+            protected virtual void ReturnContents(string safeContents, SafeOwner owner)
+            {
+                owner.ReceiveContents(safeContents);
+            }
+        }//FIn de la class Locksmith
+        class JewelThief : Locksmith
+        {
+            private string stolenJewels;
+            protected override void ReturnContents(string safeContents, SafeOwner owner)
+            {
+                stolenJewels = safeContents;
+                Console.WriteLine($"I'm stealing the jewels! I stole: {stolenJewels}");
+            }
+        }//FIn de la class JewelThief
+
+
     } //=====================================|| Fin de la class ||======================================================//
 
 
@@ -606,7 +671,83 @@ namespace TestingStuff
     } //Fin de la class STATIC
 
 
+    //===============================================================================//
+    //                                 Heritage                                      //
+    //===============================================================================//
+
+    //Nouvelles class |Test Héritage|
+    class Heritage
+    {
 
 
+        public static void TestHeritage()
+        {
+            while (true)
+            {
+                Bird bird;
+                Console.Write("\nPress P for pigeon, O for ostrich: ");
+                char key = Char.ToUpper(Console.ReadKey().KeyChar);
+                if (key == 'P') bird = new Pigeon();
+                else if (key == 'O') bird = new Ostrich();
+                else return;
+                Console.Write("\nHow many eggs should it lay? ");
+                if (!int.TryParse(Console.ReadLine(), out int numberOfEggs)) return;
+                Egg[] eggs = bird.LayEggs(numberOfEggs);
+                foreach (Egg egg in eggs)
+                {
+                    Console.WriteLine(egg.Description);
+                }
+            }
+        }
+
+        class Egg
+        {
+            public double Size { get; private set; }
+            public string Color { get; private set; }
+            public Egg(double size, string color)
+            {
+                Size = size;
+                Color = color;
+            }
+            public string Description
+            {
+                get { return $"A {Size:0.0}cm {Color} egg"; }
+            }
+        }
+        class Bird
+        {
+            public static Random Randomizer = new Random();
+            public virtual Egg[] LayEggs(int numberOfEggs)
+            {
+                Console.Error.WriteLine("Bird.LayEggs should never get called");
+                return new Egg[0];
+            }
+        }
+        class Pigeon : Bird
+        {
+            public override Egg[] LayEggs(int numberOfEggs)
+            {
+                Egg[] eggs = new Egg[numberOfEggs];
+                for (int z = 0; z < numberOfEggs; z++)
+                {
+                    eggs[z] = new Egg(Bird.Randomizer.NextDouble() * 2 + 1, "white");
+                }
+                return eggs;
+            }
+        }
+        class Ostrich : Bird
+        {
+            public override Egg[] LayEggs(int numberOfEggs)
+            {
+                Egg[] eggs = new Egg[numberOfEggs];
+                for (int i = 0; i < numberOfEggs; i++)
+                {
+                    eggs[i] = new Egg(Bird.Randomizer.NextDouble() + 12, "speckled");
+                }
+                return eggs;
+            }
+        }
+
+    }//Fin de la class Heritage
 
 }     //=====================================|| Fin du namespace ||======================================================//
