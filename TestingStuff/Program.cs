@@ -7,42 +7,88 @@ namespace TestingStuff
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Press 1 for the StatsCalculator, 2 for the SuperCalculator 3090Super, 3 for Elephant");
-            Console.WriteLine("Press 4 for the Hi - Lo game, 5 for PaintballGun, 6 for QuizzMaths ");
-            Console.WriteLine("Press 7 to TestBird, 8 for Safe");
+            Console.WriteLine("Press 1 to go on the Page 2 , 2 for the SuperCalculator 3090Super, 3 for Tests Heritage");
+            Console.WriteLine("Press 4 for //, 5 for //, 6 for Pool Puzzles ");
+            Console.WriteLine("Press 7 to //, 8 for //, 9 for //");
             Console.WriteLine("Press * to exit");
             char input = Console.ReadKey(true).KeyChar;
-            if (input == '1') { Console.Clear(); Calculator.TestCalculator(); }
-            else if (input == '2') { Console.Clear(); DamageCalculator(); }
-            else if (input == '3') { Console.Clear(); Elephant.Elephanto(); }
-            else if (input == '4') { Console.Clear(); StaticProgram.HiLogame(); }
-            else if (input == '5') { Console.Clear(); MachineGun.PaintballGun(); }
-            else if (input == '6') { Console.Clear(); Q.QuizzMaths(); }
-            else if (input == '7') { Console.Clear(); Heritage.TestHeritage(); }
-            else if (input == '8') { Console.Clear(); Safe.Vault(); }
+            if (input == '1') { Console.Clear(); SecondPage(); }
+            else if (input == '2') { Console.Clear(); Weapons.DamageCalculator(); }
+            else if (input == '3') { Console.Clear(); PageHeritage(); }
+            else if (input == '4') { Console.Clear(); }
+            else if (input == '5') { Console.Clear(); }
+            else if (input == '6') { Console.Clear(); PoolPuzzles(); }
+            else if (input == '7') { Console.Clear(); }
+            else if (input == '8') { Console.Clear(); }
+            else if (input == '9') { Console.Clear(); }
 
             else if (input == '*') return;
             else { Console.WriteLine("ARE YOU DUMB ??"); }
         }
 
-        //===============================================================================//
-        //                              Damages Calculator                               //
-        //===============================================================================//
-
-        private static void DamageCalculator()
+        private static void PoolPuzzles()
         {
-            Console.WriteLine("Press S to use a Sword, A to use an Arrow");
+            Console.WriteLine("Press 1 for the Maths Quizz, 2 for the ClownShit");
             Console.WriteLine("Any other key to quit");
-            char weaponKey = Char.ToUpper(Console.ReadKey().KeyChar);
-            switch (weaponKey)
+            char poolKey = Char.ToUpper(Console.ReadKey().KeyChar);
+            switch (poolKey)
             {
-                case 'S':
+                case '1':
                     Console.Clear();
-                    Sword.SwordDamage();
+                    Q.QuizzMaths();
                     break;
-                case 'A':
+                case '2':
                     Console.Clear();
-                    Arrow.ArrowDamage();
+
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        private static void SecondPage()
+        {
+            Console.WriteLine("Page 2 :");
+            Console.WriteLine("Press 1 for Elephant, 2 for Hilo Game, 3 for PaintBallGun");
+            Console.WriteLine("Any other key to quit");
+            char secondKey = Char.ToUpper(Console.ReadKey().KeyChar);
+            switch (secondKey)
+            {
+                case '1':
+                    Console.Clear();
+                    Elephant.Elephanto();
+                    break;
+                case '2':
+                    Console.Clear();
+                    StaticProgram.HiLogame();
+                    break;
+                case '3':
+                    Console.Clear();
+                    MachineGun.PaintballGun();
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        private static void PageHeritage()
+        {
+            Console.WriteLine("Press 1 for Test Bird, 2 for JewelsSafe, 3 for TallGuy");
+            Console.WriteLine("Any other key to quit");
+            char heritageKey = Char.ToUpper(Console.ReadKey().KeyChar);
+            switch (heritageKey)
+            {
+                case '1':
+                    Console.Clear();
+                    Heritage.TestBird();
+                    break;
+                case '2':
+                    Console.Clear();
+                    JewelsSafe.Vault();
+                    break;
+                case '3':
+                    Console.Clear();
+                    TallGuy.TallGuyMethod();
                     break;
                 default:
                     return;
@@ -50,204 +96,213 @@ namespace TestingStuff
         }
 
         //===============================================================================//
-        //                               Arrow Damage                                    //
+        //                          Weapons Damages Calculator                           //
         //===============================================================================//
-        //Class Arrow//
-        class Arrow
+
+        //Nouvelle class Weapons
+        class Weapons
         {
-            public Arrow(int startingRoll)
+            public static void DamageCalculator()
             {
-                roll = startingRoll;
-                ArrowCalculateDamage();
-            }
-
-            private const decimal BASE_MULTIPLIER = 0.35M;
-            private const decimal MAGIC_MULTIPLIER = 2.5M;
-            private const decimal FLAME_DAMAGE = 1.25M;
-            private int roll = 0;
-            public int Roll
-            {
-                get { return roll; }
-                set { roll = value; ArrowCalculateDamage(); }
-            }
-
-            public int Damage { get; private set; }
-            public bool isMagic = false;
-            public bool isFlaming = false;
-
-            private void ArrowCalculateDamage()
-            {
-                decimal baseDamage = Roll * BASE_MULTIPLIER;
-                if (Magic) baseDamage *= MAGIC_MULTIPLIER;
-                if (Flaming) Damage = (int)Math.Ceiling(baseDamage + FLAME_DAMAGE);
-                else Damage = (int)Math.Ceiling(baseDamage);
-            }
-
-            private bool magic;
-            public bool Magic
-            {
-                get { return magic; }
-                set { magic = value; ArrowCalculateDamage(); }
-            }
-
-            private bool flaming;
-            public bool Flaming
-            {
-                get { return flaming; }
-                set { flaming = value; ArrowCalculateDamage(); }
-            }
-
-            private static int ArrowRollDice(int numberOfRolls)
-            {
-                int diceRolled = 0;
-                Random random = new Random();
-                for (int j = 1; j <= numberOfRolls; j++)
+                Console.WriteLine("Press S to use a Sword, A to use an Arrow, P for your stats");
+                Console.WriteLine("Any other key to quit");
+                char weaponKey = Char.ToUpper(Console.ReadKey().KeyChar);
+                switch (weaponKey)
                 {
-                    diceRolled += random.Next(1, 7);
+                    case 'S':
+                        Console.Clear();
+                        Sword.SwordDamage();
+                        break;
+                    case 'A':
+                        Console.Clear();
+                        Arrow.ArrowDamage();
+                        break;
+                    case 'P':
+                        Console.Clear();
+                        Calculator.TestCalculator();
+                        break;
+                    default:
+                        return;
                 }
-                return diceRolled;
             }
 
-            public static void ArrowDamage()
+            abstract class WeaponDamage//Nouvelle class WeaponDamage
             {
-
-                int numberOfRolls = 0;
-                Arrow arrow = new Arrow(ArrowRollDice(numberOfRolls));
-                while (true)
+                public WeaponDamage(int startingRoll)
                 {
-                    Console.WriteLine("Welcome to the Arrow's Damage Calculatron 2000, use the Y or N keys, other keys will close the program !");
-                    Console.Write("How many dices do you want to roll ? ");
-                    if (int.TryParse(Console.ReadLine(), out numberOfRolls))
-                        arrow.Roll = ArrowRollDice(numberOfRolls);
-                    Console.WriteLine("Is your arrow Magic ? [Y/N]");
-                    char input = Console.ReadKey(true).KeyChar;
-                    if (input == 'y' || input == 'Y') { arrow.Magic = true; Console.WriteLine("Your arrow is now Magic"); }
-                    else if (input == 'n' || input == 'N') { arrow.Magic = false; Console.WriteLine("Your arrow is not Magic"); }
+                    roll = startingRoll;
+                    CalculateDamage();
+                }
+                protected const decimal ARROW_BASE_MULTIPLIER = 0.35M;
+                protected const decimal ARROW_MAGIC_MULTIPLIER = 2.5M;
+                protected const decimal ARROW_FLAME_DAMAGE = 1.25M;
+                protected const int SWORD_BASE_DAMAGE = 3;
+                protected decimal SWORD_MAGIC_MULTIPLIER = 1M;
+                protected const int SWORD_FLAME_DAMAGE = 2;
 
-                    else return;
+                protected int roll;
+                public int Roll
+                {
+                    get { return roll; }
+                    set { roll = value; CalculateDamage(); }
+                }
+                public int Damage { get; protected set; }
 
-                    Console.WriteLine("Is your arrow Flaming ? [Y/N]");
-                    input = Console.ReadKey(true).KeyChar;
-                    if (input == 'y' || input == 'Y') { arrow.Flaming = true; Console.WriteLine("Your arrow is now Flaming"); }
-                    else if (input == 'n' || input == 'N') { arrow.Flaming = false; Console.WriteLine("Your arrow is not Flaming"); }
 
-                    else return;
-                    Console.WriteLine("Calculating your damages");
-                    Thread.Sleep(300);
-                    Console.WriteLine("Calculating your damages .");
-                    Thread.Sleep(300);
-                    Console.WriteLine("Calculating your damages ..");
-                    Thread.Sleep(300);
-                    Console.WriteLine("Calculating your damages ...");
-                    Thread.Sleep(300);
-                    Console.WriteLine("The dices rolled " + arrow.Roll + " for a total of " + arrow.Damage + " HP");
-                    Console.WriteLine("Press Q to quit, any other key to continue");
-                    input = Console.ReadKey(true).KeyChar;
-                    if ((input == 'Q') || (input == 'q')) return;
-                    Console.Clear();
+                private bool magic;
+                public bool Magic
+                {
+                    get { return magic; }
+                    set { magic = value; CalculateDamage(); }
                 }
 
-            }
-
-
-
-
-
-        }//Fin de la Class Arrow//
-
-        //===============================================================================//
-        //                               Sword Damage                                    //
-        //===============================================================================//
-
-        //Class Sword//
-        class Sword
-        {
-            public Sword(int startingRoll)
-            {
-                roll = startingRoll;
-                CalculateDamage();
-            }
-
-            public const int BASE_DAMAGE = 3;
-            public const int FLAME_DAMAGE = 2;
-            private int roll = 0;
-            public int Roll
-            {
-                get { return roll; }
-                set { roll = value; CalculateDamage(); }
-            }
-
-            public int Damage { get; private set; }
-            public bool isMagic = false;
-            public bool isFlaming = false;
-
-            private void CalculateDamage()
-            {
-                decimal magicMultiplier = 1M;
-                if (Magic) magicMultiplier = 1.75M;
-                Damage = BASE_DAMAGE;
-                Damage = (int)(Roll * magicMultiplier) + BASE_DAMAGE;
-                if (Flaming) Damage += FLAME_DAMAGE;
-            }
-
-            private bool magic;
-            public bool Magic
-            {
-                get { return magic; }
-                set { magic = value; CalculateDamage(); }
-            }
-
-            private bool flaming;
-            public bool Flaming
-            {
-                get { return flaming; }
-                set { flaming = value; CalculateDamage(); }
-            }
-
-            private static int RollDice()
-            {
-                Random random = new Random();
-                return random.Next(1, 7) + random.Next(1, 7) + random.Next(1, 7);
-            }
-
-            public static void SwordDamage()
-            {
-
-                Sword ironSword = new Sword(RollDice());
-                while (true)
+                private bool flaming;
+                public bool Flaming
                 {
-                    Console.WriteLine("Welcome to the Sword's Damage Calculatron 2000, use the Y or N keys, other keys will close the program !");
-                    ironSword.Roll = RollDice();
-                    Console.WriteLine("Is your sword Magic ? [Y/N]");
-                    char input = Console.ReadKey(true).KeyChar;
-                    if (input == 'y' || input == 'Y') { ironSword.Magic = (input == 'y' || input == 'Y'); Console.WriteLine("Your sword is now Magic"); }
-                    else if (input == 'n' || input == 'N') { Console.WriteLine("Your sword is not Magic"); }
-
-                    else return;
-
-                    Console.WriteLine("Is your sword Flaming ? [Y/N]");
-                    input = Console.ReadKey(true).KeyChar;
-                    if (input == 'y' || input == 'Y') { ironSword.Flaming = (input == 'y' || input == 'Y'); Console.WriteLine("Your sword is now Flaming"); }
-                    else if (input == 'n' || input == 'N') { Console.WriteLine("Your sword is not Flaming"); }
-
-                    else return;
-                    Console.WriteLine("Calculating your damages");
-                    Thread.Sleep(300);
-                    Console.WriteLine("Calculating your damages .");
-                    Thread.Sleep(300);
-                    Console.WriteLine("Calculating your damages ..");
-                    Thread.Sleep(300);
-                    Console.WriteLine("Calculating your damages ...");
-                    Thread.Sleep(300);
-                    Console.WriteLine("The dices rolled " + ironSword.Roll + " for a total of " + ironSword.Damage + " HP");
-                    Console.WriteLine("Press Q to quit, any other key to continue");
-                    input = Console.ReadKey(true).KeyChar;
-                    if ((input == 'Q') || (input == 'q')) return;
-                    Console.Clear();
+                    get { return flaming; }
+                    set { flaming = value; CalculateDamage(); }
                 }
 
-            }
-        }//Fin de la Class Sword//
+                protected abstract void CalculateDamage();
+
+
+                protected static int RollDice(int numberOfRolls)
+                {
+                    int diceRolled = 0;
+                    Random random = new Random();
+                    for (int j = 1; j <= numberOfRolls; j++)
+                    {
+                        diceRolled += random.Next(1, 7);
+                    }
+                    return diceRolled;
+                }
+
+            }//Fin de la class WeaponDamage
+            //Class Arrow//
+            class Arrow : WeaponDamage
+            {
+                public Arrow(int startingRoll) : base(startingRoll)
+                {
+                    roll = startingRoll;
+                    CalculateDamage();
+                }
+
+                protected override void CalculateDamage()
+                {
+                    decimal baseDamage = Roll * ARROW_BASE_MULTIPLIER;
+                    if (Magic) baseDamage *= ARROW_MAGIC_MULTIPLIER;
+                    if (Flaming) Damage = (int)Math.Ceiling(baseDamage + ARROW_FLAME_DAMAGE);
+                    else Damage = (int)Math.Ceiling(baseDamage);
+                }
+
+                public static void ArrowDamage()
+                {
+
+                    int numberOfRolls = 0;
+                    Arrow arrow = new Arrow(RollDice(numberOfRolls));
+                    while (true)
+                    {
+                        Console.WriteLine("Welcome to the Arrow's Damage Calculatron 2000, use the Y or N keys, other keys will close the program !");
+                        Console.Write("How many dices do you want to roll ? ");
+                        if (int.TryParse(Console.ReadLine(), out numberOfRolls))
+                            arrow.Roll = RollDice(numberOfRolls);
+                        else return;
+                        Console.WriteLine("Is your arrow Magic ? [Y/N]");
+                        char input = Console.ReadKey(true).KeyChar;
+                        if (input == 'y' || input == 'Y') { arrow.Magic = true; Console.WriteLine("Your arrow is now Magic"); }
+                        else if (input == 'n' || input == 'N') { arrow.Magic = false; Console.WriteLine("Your arrow is not Magic"); }
+
+                        else return;
+
+                        Console.WriteLine("Is your arrow Flaming ? [Y/N]");
+                        input = Console.ReadKey(true).KeyChar;
+                        if (input == 'y' || input == 'Y') { arrow.Flaming = true; Console.WriteLine("Your arrow is now Flaming"); }
+                        else if (input == 'n' || input == 'N') { arrow.Flaming = false; Console.WriteLine("Your arrow is not Flaming"); }
+
+                        else return;
+                        Console.WriteLine("Calculating your damages");
+                        Thread.Sleep(300);
+                        Console.WriteLine("Calculating your damages .");
+                        Thread.Sleep(300);
+                        Console.WriteLine("Calculating your damages ..");
+                        Thread.Sleep(300);
+                        Console.WriteLine("Calculating your damages ...");
+                        Thread.Sleep(300);
+                        Console.WriteLine("The dices rolled " + arrow.Roll + " for a total of " + arrow.Damage + " HP");
+                        Console.WriteLine("Press Q to quit, any other key to continue");
+                        input = Console.ReadKey(true).KeyChar;
+                        if ((input == 'Q') || (input == 'q')) return;
+                        Console.WriteLine("[Reseting the system]");
+                        Thread.Sleep(1000);
+                        Console.Clear();
+                    }
+
+                }
+
+            }//Fin de la Class Arrow//
+
+            //Class Sword//
+            class Sword : WeaponDamage
+            {
+                public Sword(int startingRoll) : base(startingRoll)
+                {
+                    roll = startingRoll;
+                    CalculateDamage();
+                }
+
+                protected override void CalculateDamage()
+                {
+
+                    if (Magic) SWORD_MAGIC_MULTIPLIER = 1.75M;
+                    Damage = SWORD_BASE_DAMAGE;
+                    Damage = (int)(Roll * SWORD_MAGIC_MULTIPLIER) + SWORD_BASE_DAMAGE;
+                    if (Flaming) Damage += SWORD_FLAME_DAMAGE;
+                }
+
+                public static void SwordDamage()
+                {
+                    int numberOfRolls = 0;
+                    Sword ironSword = new Sword(RollDice(numberOfRolls));
+                    while (true)
+                    {
+                        Console.WriteLine("Welcome to the Sword's Damage Calculatron 2000, use the Y or N keys, other keys will close the program !");
+                        Console.Write("How many dices do you want to roll ? ");
+                        if (int.TryParse(Console.ReadLine(), out numberOfRolls))
+                            ironSword.Roll = RollDice(numberOfRolls);
+                        else return;
+                        Console.WriteLine("Is your sword Magic ? [Y/N]");
+                        char input = Console.ReadKey(true).KeyChar;
+                        if (input == 'y' || input == 'Y') { ironSword.Magic = true; Console.WriteLine("Your sword is now Magic"); }
+                        else if (input == 'n' || input == 'N') { ironSword.Magic = false; Console.WriteLine("Your sword is not Magic"); }
+
+                        else return;
+
+                        Console.WriteLine("Is your sword Flaming ? [Y/N]");
+                        input = Console.ReadKey(true).KeyChar;
+                        if (input == 'y' || input == 'Y') { ironSword.Flaming = true; Console.WriteLine("Your sword is now Flaming"); }
+                        else if (input == 'n' || input == 'N') { ironSword.Flaming = false; Console.WriteLine("Your sword is not Flaming"); }
+
+                        else return;
+                        Console.WriteLine("Calculating your damages");
+                        Thread.Sleep(300);
+                        Console.WriteLine("Calculating your damages .");
+                        Thread.Sleep(300);
+                        Console.WriteLine("Calculating your damages ..");
+                        Thread.Sleep(300);
+                        Console.WriteLine("Calculating your damages ...");
+                        Thread.Sleep(300);
+                        Console.WriteLine("The dices rolled " + ironSword.Roll + " for a total of " + ironSword.Damage + " HP");
+                        Console.WriteLine("Press Q to quit, any other key to continue");
+                        input = Console.ReadKey(true).KeyChar;
+                        if ((input == 'Q') || (input == 'q')) return;
+                        Console.WriteLine("[Reseting the system]");
+                        Thread.Sleep(1000);
+                        Console.Clear();
+                    }
+
+                }
+            }//Fin de la Class Sword//
+        }//Fin de la class Weapons
 
         //===============================================================================//
         //                                Stats Calculator                               //  
@@ -418,47 +473,6 @@ namespace TestingStuff
         }//Fin de la Class Elephant//
 
         //===============================================================================//
-        //                         Pool Puzzle : Maths Quizz (303)                       //
-        //===============================================================================//
-
-        //Class Quizz Maths//
-        class Q
-        {
-            public static Random R = new Random();
-            public int N1 { get; private set; }
-            public string Op { get; private set; }
-            public int N2 { get; private set; }
-            public Q(bool add)
-            {
-                if (add) Op = "+";
-                else Op = "*";
-                N1 = R.Next(1, 10);
-                N2 = R.Next(1, 10);
-            }
-            public bool Check(int a)
-            {
-                if (Op == "+") return (a == N1 + N2);
-                else return (a == N1 * N2);
-            }
-
-            public static void QuizzMaths()
-            {
-                Q q = new Q(Q.R.Next(2) == 1);
-                while (true)
-                {
-                    Console.Write($"{q.N1}{q.Op}{q.N2} = ");
-                    if (!int.TryParse(Console.ReadLine(), out int i)) { Console.WriteLine("Thanks for playing!"); return; }
-                    if (q.Check(i))
-                    {
-                        Console.WriteLine("Right!");
-                        q = new Q(Q.R.Next(2) == 1);
-                    }
-                    else Console.WriteLine("Wrong! Try again.");
-                }
-            }
-        }//Fin de la class Quizz Maths//
-
-        //===============================================================================//
         //                                Paintball Gun                                  //
         //===============================================================================//
 
@@ -553,13 +567,55 @@ namespace TestingStuff
         } //Fin de la class MachineGun
 
         //===============================================================================//
+        //                         Pool Puzzle : Maths Quizz (303)                       //
+        //===============================================================================//
+
+        //Class Quizz Maths//
+        class Q
+        {
+            public static Random R = new Random();
+            public int N1 { get; private set; }
+            public string Op { get; private set; }
+            public int N2 { get; private set; }
+            public Q(bool add)
+            {
+                if (add) Op = "+";
+                else Op = "*";
+                N1 = R.Next(1, 10);
+                N2 = R.Next(1, 10);
+            }
+            public bool Check(int a)
+            {
+                if (Op == "+") return (a == N1 + N2);
+                else return (a == N1 * N2);
+            }
+
+            public static void QuizzMaths()
+            {
+                Q q = new Q(Q.R.Next(2) == 1);
+                while (true)
+                {
+                    Console.Write($"{q.N1}{q.Op}{q.N2} = ");
+                    if (!int.TryParse(Console.ReadLine(), out int i)) { Console.WriteLine("Thanks for playing!"); return; }
+                    if (q.Check(i))
+                    {
+                        Console.WriteLine("Right!");
+                        q = new Q(Q.R.Next(2) == 1);
+                    }
+                    else Console.WriteLine("Wrong! Try again.");
+                }
+            }
+        }//Fin de la class Quizz Maths//
+
+
+
+        //===============================================================================//
         //                                Coffre-Fort                                    //
         //===============================================================================//
 
         //Nouvelle clas Safe
-        class Safe
+        class JewelsSafe
         {
-
             public static void Vault()
             {
                 SafeOwner owner = new SafeOwner();
@@ -568,58 +624,62 @@ namespace TestingStuff
                 jewelThief.OpenSafe(safe, owner);
                 Console.ReadKey(true);
             }
-            private string contents = "precious jewels";
-            private string safeCombination = "12345";
-            public string Open(string combination)
+            class Safe
             {
-                if (combination == safeCombination) return contents;
-                return "";
-            }
-            public void PickLock(Locksmith lockpicker)
-            {
-                lockpicker.Combination = safeCombination;
-            }
-        }//FIn de la class Safe
-        class SafeOwner
-        {
-            private string valuables = "";
-            public void ReceiveContents(string safeContents)
-            {
-                valuables = safeContents;
-                Console.WriteLine($"Thank you for returning my {valuables}!");
-            }
-        }//FIn de la class SafeOwner
-        class Locksmith
-        {
-            public void OpenSafe(Safe safe, SafeOwner owner)
-            {
-                safe.PickLock(this);
-                string safeContents = safe.Open(Combination);
-                ReturnContents(safeContents, owner);
-            }
-            public string Combination { private get; set; }
-            protected virtual void ReturnContents(string safeContents, SafeOwner owner)
-            {
-                owner.ReceiveContents(safeContents);
-            }
-        }//FIn de la class Locksmith
-        class JewelThief : Locksmith
-        {
-            private string stolenJewels;
-            protected override void ReturnContents(string safeContents, SafeOwner owner)
-            {
-                stolenJewels = safeContents;
-                Console.WriteLine($"I'm stealing the jewels! I stole: {stolenJewels}");
-            }
-        }//FIn de la class JewelThief
 
+
+                private string contents = "precious jewels";
+                private string safeCombination = "12345";
+                public string Open(string combination)
+                {
+                    if (combination == safeCombination) return contents;
+                    return "";
+                }
+                public void PickLock(Locksmith lockpicker)
+                {
+                    lockpicker.Combination = safeCombination;
+                }
+            }//FIn de la class Safe
+            class SafeOwner
+            {
+                private string valuables = "";
+                public void ReceiveContents(string safeContents)
+                {
+                    valuables = safeContents;
+                    Console.WriteLine($"Thank you for returning my {valuables}!");
+                }
+            }//FIn de la class SafeOwner
+            class Locksmith
+            {
+                public void OpenSafe(Safe safe, SafeOwner owner)
+                {
+                    safe.PickLock(this);
+                    string safeContents = safe.Open(Combination);
+                    ReturnContents(safeContents, owner);
+                }
+                public string Combination { private get; set; }
+                protected virtual void ReturnContents(string safeContents, SafeOwner owner)
+                {
+                    owner.ReceiveContents(safeContents);
+                }
+            }//FIn de la class Locksmith
+            class JewelThief : Locksmith
+            {
+                private string stolenJewels;
+                protected override void ReturnContents(string safeContents, SafeOwner owner)
+                {
+                    stolenJewels = safeContents;
+                    Console.WriteLine($"I'm stealing the jewels! I stole: {stolenJewels}");
+                }
+            }//FIn de la class JewelThief
+        }
 
     } //=====================================|| Fin de la class ||======================================================//
 
 
 
     //===============================================================================//
-    //                               Hi-Lo Game                                      //
+    //                           Hi-Lo Game / Static                                 //
     //===============================================================================//
 
     //Nouvelle class STATIC
@@ -680,12 +740,12 @@ namespace TestingStuff
     {
 
 
-        public static void TestHeritage()
+        public static void TestBird()
         {
             while (true)
             {
                 Bird bird;
-                Console.Write("\nPress P for pigeon, O for ostrich: ");
+                Console.Write("Press P for pigeon, O for ostrich: ");
                 char key = Char.ToUpper(Console.ReadKey().KeyChar);
                 if (key == 'P') bird = new Pigeon();
                 else if (key == 'O') bird = new Ostrich();
@@ -714,14 +774,18 @@ namespace TestingStuff
                 get { return $"A {Size:0.0}cm {Color} egg"; }
             }
         }
-        class Bird
+        class BrokenEgg : Egg
+        {
+            public BrokenEgg(string color) : base(0, $"broken {color}")
+            {
+                Console.WriteLine("A bird laid a broken egg");
+            }
+        }
+        abstract class Bird
         {
             public static Random Randomizer = new Random();
-            public virtual Egg[] LayEggs(int numberOfEggs)
-            {
-                Console.Error.WriteLine("Bird.LayEggs should never get called");
-                return new Egg[0];
-            }
+            public abstract Egg[] LayEggs(int numberOfEggs);
+
         }
         class Pigeon : Bird
         {
@@ -730,7 +794,10 @@ namespace TestingStuff
                 Egg[] eggs = new Egg[numberOfEggs];
                 for (int z = 0; z < numberOfEggs; z++)
                 {
-                    eggs[z] = new Egg(Bird.Randomizer.NextDouble() * 2 + 1, "white");
+                    if (Bird.Randomizer.Next(4) == 0)
+                        eggs[z] = new BrokenEgg("white");
+                    else
+                        eggs[z] = new Egg(Bird.Randomizer.NextDouble() * 2 + 1, "white");
                 }
                 return eggs;
             }
@@ -749,5 +816,41 @@ namespace TestingStuff
         }
 
     }//Fin de la class Heritage
+
+    //===============================================================================//
+    //                              TallGuy / Interface                              //
+    //===============================================================================//
+
+    class TallGuy : IClown
+    {
+        public string FunnyThingIHave
+        {
+            get { return "big shoes"; }
+        }
+        public void Honk()
+        {
+            Console.WriteLine("Honk honk!");
+        }
+
+        public static void TallGuyMethod()
+        {
+            TallGuy tallGuy = new TallGuy() { Height = 76, Name = "Jimmy" };
+            tallGuy.TalkAboutYourself();
+            Console.WriteLine($"The tall guy has {tallGuy.FunnyThingIHave}");
+            tallGuy.Honk();
+        }
+
+        public string Name;
+        public int Height;
+        public void TalkAboutYourself()
+        {
+            Console.WriteLine($"My name is {Name} and I'm {Height} inches tall.");
+        }
+    }//Fin de la class TallGuy
+
+
+
+
+
 
 }     //=====================================|| Fin du namespace ||======================================================//
