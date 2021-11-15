@@ -8,14 +8,14 @@ namespace TestingStuff
         static void Main(string[] args)
         {
             Console.WriteLine("Press 1 to go on the Page 2 , 2 for the SuperCalculator 3090Super, 3 for Tests Heritage");
-            Console.WriteLine("Press 4 for //, 5 for //, 6 for Pool Puzzles ");
+            Console.WriteLine("Press 4 for Cards, 5 for //, 6 for Pool Puzzles ");
             Console.WriteLine("Press 7 to //, 8 for //, 9 for //");
             Console.WriteLine("Press * to exit");
             char input = Console.ReadKey(true).KeyChar;
             if (input == '1') { Console.Clear(); SecondPage(); }
             else if (input == '2') { Console.Clear(); Weapons.DamageCalculator(); }
             else if (input == '3') { Console.Clear(); PageHeritage(); }
-            else if (input == '4') { Console.Clear(); }
+            else if (input == '4') { Console.Clear(); Cards.ChooseCard(); }
             else if (input == '5') { Console.Clear(); }
             else if (input == '6') { Console.Clear(); PoolPuzzles(); }
             else if (input == '7') { Console.Clear(); }
@@ -875,7 +875,7 @@ namespace TestingStuff
             IClown fingersTheClown = new ScaryScary("big red nose", 14);
             fingersTheClown.Honk();
             IScaryClown iScaryClownReference = fingersTheClown as IScaryClown;
-            iScaryClownReference.ScareLittleChildren();
+            iScaryClownReference.ScareAdults();
             IClown.CarCapacity = 18;
             Console.WriteLine(IClown.ClownCarDescription());
         }
@@ -1102,7 +1102,71 @@ namespace TestingStuff
         }
     } //Fin de la class STATIC
 
+    //===============================================================================//
+    //                                    Cards                                      //
+    //===============================================================================//
+
+    class Cards
+    {
+        public static void ChooseCard()
+        {
+            Console.WriteLine("Press 1 for EnumCard, 2 for //");
+            Console.WriteLine("Any other key to quit");
+            char cardKey = Char.ToUpper(Console.ReadKey().KeyChar);
+            switch (cardKey)
+            {
+                case '1':
+                    Console.Clear();
+                    Card.EnumCard();
+                    break;
+                case '2':
+                    Console.Clear();
+
+                    break;
+                default:
+                    return;
+            }
+        }
 
 
+        class Card
+        {
+            public Values Value { get; private set; }
+            public Suits Suit { get; private set; }
+            public string Name { get { return $"{Value} of {Suit}"; } }
+            public Card(Values value, Suits suit)
+            {
+                this.Value = value;
+                this.Suit = suit;
+
+            }
+
+            private static readonly Random random = new Random();
+
+            public static void EnumCard()
+            {
+                Console.WriteLine("Press Q to quit, any other key to continue");
+                int numberOfLine = 1;
+                while (true)
+                {
+                    int numberBetween0and3 = random.Next(4);
+                    int numberBetween1and13 = random.Next(1, 14);
+                    int anyRandomInteger = random.Next();
+
+                    Card myCard = new Card((Values)numberBetween1and13, (Suits)numberBetween0and3);
+                    Console.WriteLine(myCard.Name);
+
+                    numberOfLine += 1;
+                    if (numberOfLine >= 30) { Console.Clear(); Console.WriteLine("Press Q to quit, any other key to continue"); numberOfLine = 1; }
+                    char input = Char.ToUpper(Console.ReadKey(true).KeyChar);
+                    if ((input == 'Q')) return;
+                }
+
+
+            }
+
+        }//Fin de la class Card
+
+    }//Fin de la class Cards
 
 }     //=====================================|| Fin du namespace ||======================================================//
