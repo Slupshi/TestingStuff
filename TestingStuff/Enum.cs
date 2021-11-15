@@ -1,5 +1,7 @@
 ﻿namespace TestingStuff
 {
+
+    //============================||Enum pour Cards||============================//
     enum Suits
     {
         Diamonds,
@@ -7,7 +9,6 @@
         Hearts,
         Spades,
     }
-
     enum Values
     {
         Ace = 1,
@@ -24,5 +25,17 @@
         Queen = 12,
         King = 13,
     }
+    //============================||Enum pour Shoes||============================//
+    enum Style
+    {
+        Sneaker,
+        Loafer,
+        Sandal,
+        Flipflop,
+        Wingtip,
+        Clog,
+    }
+
+
 
 }//Fin du namespace
