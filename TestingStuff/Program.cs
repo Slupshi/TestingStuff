@@ -39,7 +39,7 @@ namespace TestingStuff
                     break;
                 case '2':
                     Console.Clear();
-
+                    Clown.Clown16();
                     break;
                 default:
                     return;
@@ -74,6 +74,7 @@ namespace TestingStuff
         private static void PageHeritage()
         {
             Console.WriteLine("Press 1 for Test Bird, 2 for JewelsSafe, 3 for TallGuy");
+            Console.WriteLine("Press 4 for the ZOO, 5 for IClown");
             Console.WriteLine("Any other key to quit");
             char heritageKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (heritageKey)
@@ -89,6 +90,14 @@ namespace TestingStuff
                 case '3':
                     Console.Clear();
                     TallGuy.TallGuyMethod();
+                    break;
+                case '4':
+                    Console.Clear();
+                    Zoo.MainZOO();
+                    break;
+                case '5':
+                    Console.Clear();
+                    IClowns.IClownMain();
                     break;
                 default:
                     return;
@@ -607,7 +616,72 @@ namespace TestingStuff
             }
         }//Fin de la class Quizz Maths//
 
+        //===============================================================================//
+        //                         Pool Puzzle : Clown ? (409)                           //
+        //===============================================================================//
 
+        class Clown
+        {
+            internal static void Clown16()
+            {
+                Of2016.Clown2016();
+            }
+
+            abstract class Picasso : INose
+            {
+                private string face;
+                public virtual string Face
+                {
+                    get { return face; }
+                }
+                public abstract int Ear();
+                public Picasso(string face)
+                {
+                    this.face = face;
+                }
+            }
+
+            class Clowns : Picasso
+            {
+                public Clowns() : base("Clowns") { }
+                public override int Ear()
+                {
+                    return 7;
+                }
+            }
+
+            class Acts : Picasso
+            {
+                public Acts() : base("Acts") { }
+                public override int Ear()
+                {
+                    return 5;
+                }
+            }
+
+            class Of2016 : Clowns
+            {
+                public override string Face
+                {
+                    get { return "Of2016"; }
+                }
+                public static void Clown2016()
+                {
+                    string result = "";
+                    INose[] i = new INose[3];
+                    i[0] = new Acts();
+                    i[1] = new Clowns();
+                    i[2] = new Of2016();
+                    for (int x = 0; x < 3; x++)
+                    {
+                        result +=
+                        $"{ i[x].Ear() } { i[x].Face }\n";
+                    }
+                    Console.WriteLine(result);
+                    Console.ReadKey();
+                }
+            }
+        }//Fin de a class Clown
 
         //===============================================================================//
         //                                Coffre-Fort                                    //
@@ -674,62 +748,190 @@ namespace TestingStuff
             }//FIn de la class JewelThief
         }
 
+        //===============================================================================//
+        //                                   ZOO                                         //
+        //===============================================================================//
+
+        class Zoo
+        {
+            public static void MainZOO()
+            {
+                Animal[] animals =
+                {
+                    new Wolf(false),
+                    new Hippo(),
+                    new Wolf(true),
+                    new Wolf(false),
+                    new Hippo()
+                };
+                foreach (Animal animal in animals)
+                {
+                    animal.MakeNoise();
+                    if (animal is ISwimmer swimmer)
+                    {
+                        swimmer.Swim();
+                    }
+                    if (animal is IPackHunter packHunter)
+                    {
+                        packHunter.HuntInPack();
+                    }
+                    Console.WriteLine();
+                }
+            }
+
+            abstract class Animal
+            {
+                public abstract void MakeNoise();
+            }
+            class Hippo : Animal, ISwimmer
+            {
+                public override void MakeNoise()
+                {
+                    Console.WriteLine("Grunt.");
+                }
+                public void Swim()
+                {
+                    Console.WriteLine("Splash! I'm going for a swim!");
+                }
+            }
+            abstract class Canine : Animal
+            {
+                public bool BelongsToPack { get; protected set; } = false;
+            }
+            class Wolf : Canine, IPackHunter
+            {
+                public Wolf(bool belongsToPack)
+                {
+                    BelongsToPack = belongsToPack;
+                }
+                public override void MakeNoise()
+                {
+                    if (BelongsToPack)
+                        Console.WriteLine("I'm in a pack.");
+                    Console.WriteLine("Aroooooo!");
+                }
+                public void HuntInPack()
+                {
+                    if (BelongsToPack)
+                        Console.WriteLine("I'm going hunting with my pack!");
+                    else
+                        Console.WriteLine("I'm not in a pack.");
+                }
+            }
+        }//Fin de la class ZOO
+
     } //=====================================|| Fin de la class ||======================================================//
 
-
-
     //===============================================================================//
-    //                           Hi-Lo Game / Static                                 //
+    //                                   IClowns                                     //
     //===============================================================================//
 
-    //Nouvelle class STATIC
-    static class StaticProgram
+    class IClowns
     {
-        private static Random random = new Random();
-        private const int MAXIMUM = 10;
-        private static int currentNumber = random.Next(1, MAXIMUM + 1);
-        private static int pot = 10;
-        private static int nextNumber;
+        /* Réponse :
+         * class FunnyFunny : IClown
+         {
+             private string funnyThingIHave;
+             public string FunnyThingIHave { get { return funnyThingIHave; } }
 
-        public static void HiLogame()
+             public FunnyFunny(string funnyThingIHave)
+             {
+                 this.funnyThingIHave = funnyThingIHave;
+             }
+
+             public void Honk()
+             {
+                 Console.WriteLine($"Hi kids! I have a {funnyThingIHave}.");
+             }
+         }
+
+         class ScaryScary : FunnyFunny, IScaryClown
+         {
+             private int scaryThingCount;
+             public ScaryScary(string funnyThing, int scaryThingCount) : base(funnyThing)
+             {
+                 this.scaryThingCount = scaryThingCount;
+             }
+             public string ScaryThingIHave { get { return $"{scaryThingCount} spiders"; } }
+             public void ScareLittleChildren()
+             {
+                 Console.WriteLine($"Boo! Gotcha! Look at my {ScaryThingIHave}!");
+             }
+         }
+
+         static void Main(string[] args)
+         {
+             IClown fingersTheClown = new ScaryScary("big red nose", 14);
+             fingersTheClown.Honk();
+             if (fingersTheClown is IScaryClown iScaryClownReference)
+             {
+                 iScaryClownReference.ScareLittleChildren();
+             }
+         } */
+
+
+        public static void IClownMain()
         {
-            Console.WriteLine("Welcome to HiLo.");
-            Console.WriteLine($"Guess numbers between 1 and {MAXIMUM}.");
-            Console.WriteLine($"The current number is {currentNumber}");
-            while (GetPot() > 0)
+            IClown fingersTheClown = new ScaryScary("big red nose", 14);
+            fingersTheClown.Honk();
+            IScaryClown iScaryClownReference = fingersTheClown as IScaryClown;
+            iScaryClownReference.ScareLittleChildren();
+            IClown.CarCapacity = 18;
+            Console.WriteLine(IClown.ClownCarDescription());
+        }
+
+        class FunnyFunny : IClown
+        {
+            private string funnyThingIHave;
+            public string FunnyThingIHave
             {
-                Console.WriteLine("Press h for higher, l for lower, k to buy a hint,");
-                Console.WriteLine($"or any other key to quit with {GetPot()} bucks.");
-                char key = Console.ReadKey(true).KeyChar;
-                if (key == 'h') Guess(true);
-                else if (key == 'l') Guess(false);
-                else if (key == 'k') Hint();
-                else return;
+                get { return funnyThingIHave; }
+                private set { }
             }
-            Console.WriteLine("The pot is empty. Bye!");
-        }
 
-        public static int GetPot() { return pot; }
+            public FunnyFunny(string funnyThingIHave)
+            {
+                FunnyThingIHave = funnyThingIHave;
+            }
 
-        public static void Guess(bool higher)
+            public void Honk()
+            {
+                Console.WriteLine($"Hi kids! I have a {FunnyThingIHave}");
+            }
+        }//Fin de la class FunnyFunny
+
+        class ScaryScary : IScaryClown
         {
-            nextNumber = random.Next(1, MAXIMUM + 1);
-            if ((higher && nextNumber >= currentNumber)
-                || (!higher && nextNumber <= currentNumber))
-            { Console.WriteLine("You guessed right !"); pot += 1; Console.WriteLine("You gained 1 buck !"); }
-            else
-            { Console.WriteLine("You guessed wrong !"); pot -= 1; Console.WriteLine("You lost 1 buck !"); }
-            currentNumber = nextNumber;
-            Console.WriteLine($"The current number is now {currentNumber}");
-        }
 
-        public static void Hint()
-        {
-            if (nextNumber >= MAXIMUM / 2) { Console.WriteLine($"The number is at least {MAXIMUM / 2}"); pot -= 1; Console.WriteLine("You lost 1 buck !"); }
-            else if (nextNumber <= MAXIMUM / 2) { Console.WriteLine($"The number is at most {MAXIMUM / 2}"); pot -= 1; Console.WriteLine("You lost 1 buck !"); }
-        }
-    } //Fin de la class STATIC
+            public ScaryScary(string funny, int scary)
+            {
+                scaryThingCount = scary;
+                funnyThingIHave = funny;
+            }
 
+            private readonly string funnyThingIHave;
+            public string FunnyThingIHave
+            {
+                get { return funnyThingIHave; }
+                private set { }
+            }
+            private readonly int scaryThingCount;
+            public string ScaryThingIHave
+            {
+                get { return ($"{scaryThingCount} spiders"); }
+            }
+
+            public void Honk()
+            {
+                Console.WriteLine($"Hi kids! I have a {FunnyThingIHave}");
+            }
+            public void ScareLittleChildren()
+            {
+                Console.WriteLine($"Boo! Gotcha! Look at my {ScaryThingIHave} !");
+            }
+        }//Fin de la class ScaryScary
+
+    }//Fin de la class IClowns
 
     //===============================================================================//
     //                                 Heritage                                      //
@@ -848,7 +1050,57 @@ namespace TestingStuff
         }
     }//Fin de la class TallGuy
 
+    //===============================================================================//
+    //                           Hi-Lo Game / Static                                 //
+    //===============================================================================//
 
+    //Nouvelle class STATIC
+    static class StaticProgram
+    {
+        private static Random random = new Random();
+        private const int MAXIMUM = 10;
+        private static int currentNumber = random.Next(1, MAXIMUM + 1);
+        private static int pot = 10;
+        private static int nextNumber;
+
+        public static void HiLogame()
+        {
+            Console.WriteLine("Welcome to HiLo.");
+            Console.WriteLine($"Guess numbers between 1 and {MAXIMUM}.");
+            Console.WriteLine($"The current number is {currentNumber}");
+            while (GetPot() > 0)
+            {
+                Console.WriteLine("Press h for higher, l for lower, k to buy a hint,");
+                Console.WriteLine($"or any other key to quit with {GetPot()} bucks.");
+                char key = Console.ReadKey(true).KeyChar;
+                if (key == 'h') Guess(true);
+                else if (key == 'l') Guess(false);
+                else if (key == 'k') Hint();
+                else return;
+            }
+            Console.WriteLine("The pot is empty. Bye!");
+        }
+
+        public static int GetPot() { return pot; }
+
+        public static void Guess(bool higher)
+        {
+            nextNumber = random.Next(1, MAXIMUM + 1);
+            if ((higher && nextNumber >= currentNumber)
+                || (!higher && nextNumber <= currentNumber))
+            { Console.WriteLine("You guessed right !"); pot += 1; Console.WriteLine("You gained 1 buck !"); }
+            else
+            { Console.WriteLine("You guessed wrong !"); pot -= 1; Console.WriteLine("You lost 1 buck !"); }
+            currentNumber = nextNumber;
+            Console.WriteLine($"The current number is now {currentNumber}");
+        }
+
+        public static void Hint()
+        {
+            if (nextNumber >= MAXIMUM / 2) { Console.WriteLine($"The number is at least {MAXIMUM / 2}"); pot -= 1; Console.WriteLine("You lost 1 buck !"); }
+            else if (nextNumber <= MAXIMUM / 2) { Console.WriteLine($"The number is at most {MAXIMUM / 2}"); pot -= 1; Console.WriteLine("You lost 1 buck !"); }
+        }
+    } //Fin de la class STATIC
 
 
 
