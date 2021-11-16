@@ -9,15 +9,15 @@ namespace TestingStuff
         static void Main(string[] args)
         {
             Console.WriteLine("Press 1 to go on the Page 2 , 2 for the SuperCalculator 3090Super, 3 for Tests Heritage");
-            Console.WriteLine("Press 4 for Cards, 5 for ShoesStore, 6 for Pool Puzzles ");
-            Console.WriteLine("Press 7 to //, 8 for //, 9 for //");
+            Console.WriteLine("Press 4 for Cards, 5 for LISTS, 6 for Pool Puzzles ");
+            Console.WriteLine("Press 7 to //, 8 for //, 9 for Test");
             Console.WriteLine("Press * to exit");
             char input = Console.ReadKey(true).KeyChar;
             if (input == '1') { Console.Clear(); SecondPage(); }
             else if (input == '2') { Console.Clear(); Weapons.DamageCalculator(); }
             else if (input == '3') { Console.Clear(); PageHeritage(); }
             else if (input == '4') { Console.Clear(); Cards.ChooseCard(); }
-            else if (input == '5') { Console.Clear(); Shoes.ShoesMain(); }
+            else if (input == '5') { Console.Clear(); Lists.ChooseList(); }
             else if (input == '6') { Console.Clear(); PoolPuzzles(); }
             else if (input == '7') { Console.Clear(); }
             else if (input == '8') { Console.Clear(); }
@@ -1171,104 +1171,253 @@ namespace TestingStuff
     }//Fin de la class Cards
 
     //===============================================================================//
-    //                                    Shoes                                      //
+    //                                    LISTS                                      //
     //===============================================================================//
 
-    class Shoes
+    class Lists
     {
-        static ShoeCloset shoeCloset = new ShoeCloset();
-        public static void ShoesMain()
+
+        public static void ChooseList()
         {
-            while (true)
+            Console.WriteLine("Press 1 for ShoesStore, 2 for Test, 3 for Ducks");
+            Console.WriteLine("Any other key to quit");
+            char cardKey = Char.ToUpper(Console.ReadKey().KeyChar);
+            switch (cardKey)
             {
-                shoeCloset.PrintShoes();
-                Console.Write("\nPress 'a' to add or 'r' to remove a shoe: ");
-                char key = Console.ReadKey().KeyChar;
-                switch (key)
-                {
-                    case 'a':
-                    case 'A':
-                        shoeCloset.AddShoe();
-                        break;
-                    case 'r':
-                    case 'R':
-                        shoeCloset.RemoveShoe();
-                        break;
-                    default:
-                        return;
-                }
+                case '1':
+                    Console.Clear();
+                    Shoes.ShoesMain();
+                    break;
+                case '2':
+                    Console.Clear();
+                    TestList.TestListMain();
+                    break;
+                case '3':
+                    Console.Clear();
+                    Duck.Ducks();
+                    break;
+                default:
+                    return;
             }
         }
 
-        class Shoe
-        {
-            public Style Style
-            {
-                get; private set;
-            }
-            public string Color
-            {
-                get; private set;
-            }
-            public Shoe(Style style, string color)
-            {
-                Style = style;
-                Color = color;
-            }
-            public string Description
-            {
-                get { return $"A {Color} {Style}"; }
-            }
-        }//Fin de la class Shoe
+        //===============================================================================//
+        //                                    Shoes                                      //
+        //===============================================================================//
 
-        class ShoeCloset
+        class Shoes
         {
-            private readonly List<Shoe> shoes = new List<Shoe>();
-            public void PrintShoes()
+            static ShoeCloset shoeCloset = new ShoeCloset();
+            public static void ShoesMain()
             {
-                if (shoes.Count == 0)
+                while (true)
                 {
-                    Console.WriteLine("\nThe shoe closet is empty.");
-                }
-                else
-                {
-                    Console.WriteLine("\nThe shoe closet contains:");
-                    int i = 1;
-                    foreach (Shoe shoe in shoes)
+                    shoeCloset.PrintShoes();
+                    Console.Write("\nPress 'a' to add or 'r' to remove a shoe: ");
+                    char key = Console.ReadKey().KeyChar;
+                    switch (key)
                     {
-                        Console.WriteLine($"Shoe #{i++}: {shoe.Description}");
+                        case 'a':
+                        case 'A':
+                            shoeCloset.AddShoe();
+                            break;
+                        case 'r':
+                        case 'R':
+                            shoeCloset.RemoveShoe();
+                            break;
+                        default:
+                            return;
                     }
                 }
             }
-            public void AddShoe()
+
+            class Shoe
             {
-                Console.WriteLine("\nAdd a shoe");
-                for (int i = 0; i < 6; i++)
+                public Style Style
                 {
-                    Console.WriteLine($"Press {i} to add a {(Style)i}");
+                    get; private set;
                 }
-                Console.Write("Enter a style: ");
-                if (int.TryParse(Console.ReadKey().KeyChar.ToString(), out int style))
+                public string Color
                 {
-                    Console.Write("\nEnter the color: ");
-                    string color = Console.ReadLine();
-                    Shoe shoe = new Shoe((Style)style, color);
-                    shoes.Add(shoe);
+                    get; private set;
+                }
+                public Shoe(Style style, string color)
+                {
+                    Style = style;
+                    Color = color;
+                }
+                public string Description
+                {
+                    get { return $"A {Color} {Style}"; }
+                }
+            }//Fin de la class Shoe
+
+            class ShoeCloset
+            {
+                private readonly List<Shoe> shoes = new List<Shoe>();
+                public void PrintShoes()
+                {
+                    if (shoes.Count == 0)
+                    {
+                        Console.WriteLine("\nThe shoe closet is empty.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nThe shoe closet contains:");
+                        int i = 1;
+                        foreach (Shoe shoe in shoes)
+                        {
+                            Console.WriteLine($"Shoe #{i++}: {shoe.Description}");
+                        }
+                    }
+                }
+                public void AddShoe()
+                {
+                    Console.WriteLine("\nAdd a shoe");
+                    for (int i = 0; i < 6; i++)
+                    {
+                        Console.WriteLine($"Press {i} to add a {(Style)i}");
+                    }
+                    Console.Write("Enter a style: ");
+                    if (int.TryParse(Console.ReadKey().KeyChar.ToString(), out int style))
+                    {
+                        Console.Write("\nEnter the color: ");
+                        string color = Console.ReadLine();
+                        Shoe shoe = new Shoe((Style)style, color);
+                        shoes.Add(shoe);
+                    }
+                }
+                public void RemoveShoe()
+                {
+                    Console.Write("\nEnter the number of the shoe to remove: ");
+                    if (int.TryParse(Console.ReadKey().KeyChar.ToString(), out int shoeNumber) &&
+                    (shoeNumber >= 1) && (shoeNumber <= shoes.Count))
+                    {
+                        Console.WriteLine($"\nRemoving {shoes[shoeNumber - 1].Description}");
+                        shoes.RemoveAt(shoeNumber - 1);
+                    }
+                }
+            }//Fin de la class ShoeCloset
+
+        }//Fin de la class Shoes
+
+        //===============================================================================//
+        //                                    TEST                                       //
+        //===============================================================================//
+
+        class TestList
+        {
+
+            public static void TestListMain()
+            {
+
+                List<string> a = new List<string>();
+                PppPppL(a);
+                static void PppPppL(List<string> a)
+                {
+
+                    string zilch = "zero";
+                    string first = "one";
+                    string second = "two";
+                    string third = "three";
+                    string fourth = "4.2";
+                    string twopointtwo = "2.2";
+                    a.Add(zilch);
+                    a.Add(first);
+                    a.Add(second);
+                    a.Add(third);
+                    a.RemoveAt(2);
+                    if (a.Contains("three"))
+                    {
+                        a.Add("four");
+                    }
+                    if (a.IndexOf("four") != 4)
+                    {
+                        a.Add(fourth);
+                    }
+                    if (a.Contains("two"))
+                    {
+                        a.Add(twopointtwo);
+                    }
+                    foreach (string element in a)
+                    {
+                        Console.WriteLine(element);
+                    }
                 }
             }
-            public void RemoveShoe()
+        }//Fin de la class Test
+
+        //===============================================================================//
+        //                                     Duck                                      //
+        //===============================================================================//
+
+        class Duck : IComparable<Duck>
+        {
+            public static void Ducks()
             {
-                Console.Write("\nEnter the number of the shoe to remove: ");
-                if (int.TryParse(Console.ReadKey().KeyChar.ToString(), out int shoeNumber) &&
-                (shoeNumber >= 1) && (shoeNumber <= shoes.Count))
+                List<Duck> ducks = new List<Duck>() {
+                new Duck() { Kind = KindOfDuck.Mallard, Size = 17 },
+                new Duck() { Kind = KindOfDuck.Muscovy, Size = 18 },
+                new Duck() { Kind = KindOfDuck.Loon, Size = 14 },
+                new Duck() { Kind = KindOfDuck.Muscovy, Size = 11 },
+                new Duck() { Kind = KindOfDuck.Mallard, Size = 14 },
+                new Duck() { Kind = KindOfDuck.Loon, Size = 13 }, };
+                IComparer<Duck> sizeComparer = new DuckComparerBySize();
+                ducks.Sort(sizeComparer);
+                PrintDucks(ducks);
+            }
+
+            public int Size
+            {
+                get; set;
+            }
+            public KindOfDuck Kind
+            {
+                get; set;
+            }
+            public int CompareTo(Duck duckToCompare)
+            {
+                if (this.Size > duckToCompare.Size)
+                    return 1;
+                else if (this.Size < duckToCompare.Size)
+                    return -1;
+                else
+                    return 0;
+            }
+            public static void PrintDucks(List<Duck> ducks)
+            {
+                foreach (Duck duck in ducks)
                 {
-                    Console.WriteLine($"\nRemoving {shoes[shoeNumber - 1].Description}");
-                    shoes.RemoveAt(shoeNumber - 1);
+                    Console.WriteLine($"{duck.Size} inch {duck.Kind}");
                 }
             }
-        }//Fin de la class ShoeCloset
 
-    }//Fin de la class Shoes
+            class DuckComparerBySize : IComparer<Duck>
+            {
+                public int Compare(Duck x, Duck y)
+                {
+                    if (x.Size < y.Size)
+                        return -1;
+                    if (x.Size > y.Size)
+                        return 1;
+                    return 0;
+                }
+            }//Fin de la class DuckComparerBySize
 
+            class DuckComparerByKind : IComparer<Duck>
+            {
+                public int Compare(Duck x, Duck y)
+                {
+                    if (x.Kind < y.Kind)
+                        return -1;
+                    if (x.Kind > y.Kind)
+                        return 1;
+                    else
+                        return 0;
+                }
+            }//Fin de la class DuckComparerBykind
 
+        }//Fin de la class Duck
+
+    }//Fin de la class Lists
 }     //=====================================|| Fin du namespace ||======================================================//

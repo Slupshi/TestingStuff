@@ -35,7 +35,12 @@
         Wingtip,
         Clog,
     }
-
-
+    //============================||Enum pour Duck||============================//
+    enum KindOfDuck
+    {
+        Mallard,
+        Muscovy,
+        Loon,
+    }
 
 }//Fin du namespace
