@@ -25,6 +25,11 @@
         Queen = 12,
         King = 13,
     }
+    enum CardSortCriteria
+    {
+        SuitThenValue,
+        ValueThenSuit,
+    }
     //============================||Enum pour Shoes||============================//
     enum Style
     {
@@ -42,5 +47,9 @@
         Muscovy,
         Loon,
     }
-
+    enum DuckSortCriteria
+    {
+        SizeThenKind,
+        KindThenSize,
+    }
 }//Fin du namespace
