@@ -52,4 +52,12 @@
         SizeThenKind,
         KindThenSize,
     }
+    //============================||Enum pour LumberJack||============================//
+    enum FlapJack
+    {
+        crispy,
+        soggy,
+        browned,
+        banana,
+    }
 }//Fin du namespace
