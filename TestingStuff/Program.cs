@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 
 namespace TestingStuff
@@ -8,9 +9,9 @@ namespace TestingStuff
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Press 1 to go on the Page 2 , 2 for the SuperCalculator 3090Super, 3 for Tests Heritage");
+            Console.WriteLine("Press 1 to go on the Page 2, 2 for the SuperCalculator 3090Super, 3 for Tests Heritage");
             Console.WriteLine("Press 4 for Cards, 5 for LISTS, 6 for Pool Puzzles ");
-            Console.WriteLine("Press 7 to //, 8 for //, 9 for Test");
+            Console.WriteLine("Press 7 for Dictionary, 8 for //, 9 for Test");
             Console.WriteLine("Press * to exit");
             char input = Console.ReadKey(true).KeyChar;
             if (input == '1') { Console.Clear(); SecondPage(); }
@@ -19,7 +20,7 @@ namespace TestingStuff
             else if (input == '4') { Console.Clear(); Cards.ChooseCard(); }
             else if (input == '5') { Console.Clear(); Lists.ChooseList(); }
             else if (input == '6') { Console.Clear(); PoolPuzzles(); }
-            else if (input == '7') { Console.Clear(); }
+            else if (input == '7') { Console.Clear(); Dictionary.ChooseDico(); }
             else if (input == '8') { Console.Clear(); }
             else if (input == '9') { Console.Clear(); }
 
@@ -1434,6 +1435,7 @@ namespace TestingStuff
         public static void ChooseList()
         {
             Console.WriteLine("Press 1 for ShoesStore, 2 for Test, 3 for Ducks");
+            Console.WriteLine("Press 4 for DuckBird");
             Console.WriteLine("Any other key to quit");
             char cardKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (cardKey)
@@ -1449,6 +1451,10 @@ namespace TestingStuff
                 case '3':
                     Console.Clear();
                     Duck.Ducks();
+                    break;
+                case '4':
+                    Console.Clear();
+                    Ducks.DuckBird();
                     break;
                 default:
                     return;
@@ -1711,7 +1717,134 @@ namespace TestingStuff
                         return 0;
                 }
             }//Fin de la class DuckComparer
+
         }//Fin de la class Duck
 
+        class Birds
+        {
+            public string Name { get; set; }
+            public virtual void Fly(string destination)
+            {
+                Console.WriteLine($"{this} is flying to {destination}");
+            }
+            public override string ToString()
+            {
+                return $"A bird named {Name}";
+            }
+            public static void FlyAway(List<Birds> flock, string destination)
+            {
+                foreach (Birds bird in flock)
+                {
+                    bird.Fly(destination);
+                }
+            }
+        }//Fin de la class Birds
+
+        class Ducks : Birds
+        {
+
+            public static void DuckBird()
+            {
+                List<Ducks> ducks = new List<Ducks>() {
+                new Ducks() { Kind = KindOfDuck.Mallard, Size = 17 },
+                new Ducks() { Kind = KindOfDuck.Muscovy, Size = 18 },
+                new Ducks() { Kind = KindOfDuck.Loon, Size = 14 },
+                new Ducks() { Kind = KindOfDuck.Muscovy, Size = 11 },
+                new Ducks() { Kind = KindOfDuck.Mallard, Size = 14 },
+                new Ducks() { Kind = KindOfDuck.Loon, Size = 13 }, };
+                IEnumerable<Birds> upcastDucks = ducks;
+                Birds.FlyAway(upcastDucks.ToList(), "Minnesota");
+            }
+
+            public int Size { get; set; }
+            public KindOfDuck Kind { get; set; }
+            public override string ToString()
+            {
+                return $"A {Size} inch {Kind}";
+            }
+        }//Fin de la class Ducks
     }//Fin de la class Lists
+
+    //===============================================================================//
+    //                        Dictionary / Stack / Queue                             //
+    //===============================================================================//
+
+    class Dictionary
+    {
+        public static void ChooseDico()
+        {
+            Console.WriteLine("Press 1 for RetiredPlayers, 2 for //");
+            Console.WriteLine("Any other key to quit");
+            char dicoKey = Char.ToUpper(Console.ReadKey().KeyChar);
+            switch (dicoKey)
+            {
+                case '1':
+                    Console.Clear();
+                    RetiredPlayer.RetiredPlayersMain();
+                    break;
+                case '2':
+                    Console.Clear();
+
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        class RetiredPlayer
+        {
+            public string Name { get; private set; }
+            public int YearRetired { get; private set; }
+            public RetiredPlayer(string player, int yearRetired)
+            {
+                Name = player;
+                YearRetired = yearRetired;
+            }
+
+            public static void RetiredPlayersMain()
+            {
+                Dictionary<int, RetiredPlayer> retiredYankees = new Dictionary<int, RetiredPlayer>() {
+                {3, new RetiredPlayer("Babe Ruth", 1948)},
+                {4, new RetiredPlayer("Lou Gehrig", 1939)},
+                {5, new RetiredPlayer("Joe DiMaggio", 1952)},
+                {7, new RetiredPlayer("Mickey Mantle", 1969)},
+                {8, new RetiredPlayer("Yogi Berra", 1972)},
+                {10, new RetiredPlayer("Phil Rizzuto", 1985)},
+                {23, new RetiredPlayer("Don Mattingly", 1997)},
+                {42, new RetiredPlayer("Jackie Robinson", 1993)},
+                {44, new RetiredPlayer("Reggie Jackson", 1993)},};
+
+                foreach (int jerseyNumber in retiredYankees.Keys)
+                {
+                    RetiredPlayer player = retiredYankees[jerseyNumber];
+                    Console.WriteLine($"{player.Name} #{jerseyNumber} retired in {player.YearRetired}");
+                }
+            }
+        }//Fin de la class RetiredPlayers
+
+        class LumberJack
+        {
+
+        }//Fin de la class LumberJack
+
+    }//Fin de la class Disctionary
+
 }     //=====================================|| Fin du namespace ||======================================================//
+
+
+/*Exemple de Main Method avec un Dictionary
+ * 
+Dictionary<string, string> favoriteFoods = new Dictionary<string, string>();
+ favoriteFoods["Alex"] = "hot dogs";
+ favoriteFoods["A'ja"] = "pizza";
+ favoriteFoods["Jules"] = "falafel";
+ favoriteFoods["Naima"] = "spaghetti";
+ string name;
+ while ((name = Console.ReadLine()) != "")
+ {
+ if (favoriteFoods.ContainsKey(name))
+ Console.WriteLine($"{name}'s favorite food is {favoriteFoods[name]}");
+ else
+ Console.WriteLine($"I don't know {name}'s favorite food");
+ } 
+*/
