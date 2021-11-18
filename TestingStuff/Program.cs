@@ -1877,7 +1877,7 @@ namespace TestingStuff
 
             private static void EatFlapJack()
             {
-                int lumberJackWhoAte = 0;
+
                 foreach (LumberJack lumberJack in lumberjackQueue)
                 {
                     Console.WriteLine(" ");
@@ -1885,9 +1885,8 @@ namespace TestingStuff
                     {
                         Console.WriteLine($"{lumberJack.Name} ate a {flapjackStack.Pop()}");
                     }
-                    lumberJackWhoAte++;
                 }
-                for (int k = 0; k < lumberJackWhoAte; k++)
+                while (lumberjackQueue.Count > 0)
                 {
                     lumberjackQueue.Dequeue();
                 }
