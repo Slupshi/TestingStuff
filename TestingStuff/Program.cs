@@ -1773,7 +1773,7 @@ namespace TestingStuff
     {
         public static void ChooseDico()
         {
-            Console.WriteLine("Press 1 for RetiredPlayers, 2 for LumberJack");
+            Console.WriteLine("Press 1 for RetiredPlayers, 2 for LumberJack, 3 for LINQS");
             Console.WriteLine("Any other key to quit");
             char dicoKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (dicoKey)
@@ -1786,10 +1786,18 @@ namespace TestingStuff
                     Console.Clear();
                     LumberJack.LumberJackMain();
                     break;
+                case '3':
+                    Console.Clear();
+                    LINQ.ChooseLinq();
+                    break;
                 default:
                     return;
             }
         }
+
+        //===============================================================================//
+        //                               Retired Players                                 //
+        //===============================================================================//
 
         class RetiredPlayer
         {
@@ -1821,6 +1829,10 @@ namespace TestingStuff
                 }
             }
         }//Fin de la class RetiredPlayers
+
+        //===============================================================================//
+        //                               LumberJack                                      //
+        //===============================================================================//
 
         class LumberJack
         {
@@ -1894,24 +1906,101 @@ namespace TestingStuff
 
         }//Fin de la class LumberJack
 
+        //===============================================================================//
+        //                                   LINQ                                        //
+        //===============================================================================//
+
+        class LINQ
+        {
+            public static void ChooseLinq()
+            {
+                Console.WriteLine("Press 1 for TestLinq, 2 for Comic, 3 for //");
+                Console.WriteLine("Any other key to quit");
+                char linqKey = Char.ToUpper(Console.ReadKey().KeyChar);
+                switch (linqKey)
+                {
+                    case '1':
+                        Console.Clear();
+                        TestLinq.TestLinqMain();
+                        break;
+                    case '2':
+                        Console.Clear();
+                        Comic.ComicMain();
+                        break;
+                    case '3':
+                        Console.Clear();
+
+                        break;
+                    default:
+                        return;
+                }
+            }
+
+            class TestLinq
+            {
+                public static void TestLinqMain()
+                {
+                    List<int> numbers = new List<int>();
+                    for (int i = 1; i <= 99; i++)
+                        numbers.Add(i);
+                    IEnumerable<int> firstAndLastFive = numbers.Take(5).Concat(numbers.TakeLast(5));
+                    foreach (int i in firstAndLastFive)
+                    {
+                        Console.Write($"{i} ");
+                    }
+                }
+
+            }//Fin de la class TestLinq
+
+            class Comic
+            {
+                public string Name { get; set; }
+                public int Issue { get; set; }
+                public override string ToString() => $"{Name} (Issue #{Issue})";
+
+                public static readonly IEnumerable<Comic> Catalog =
+                 new List<Comic> {
+                 new Comic { Name = "Johnny America vs. the Pinko", Issue = 6 },
+                 new Comic { Name = "Rock and Roll (limited edition)", Issue = 19 },
+                 new Comic { Name = "Woman's Work", Issue = 36 },
+                 new Comic { Name = "Hippie Madness (misprinted)", Issue = 57 },
+                 new Comic { Name = "Revenge of the New Wave Freak (damaged)", Issue = 68 },
+                 new Comic { Name = "Black Monday", Issue = 74 },
+                 new Comic { Name = "Tribal Tattoo Madness", Issue = 83 },
+                 new Comic { Name = "The Death of the Object", Issue = 97 },};
+
+                public static readonly IReadOnlyDictionary<int, decimal> Prices =
+                    new Dictionary<int, decimal> {
+                        { 6, 3600M },
+                        { 19, 500M },
+                        { 36, 650M },
+                        { 57, 13525M },
+                        { 68, 250M },
+                        { 74, 75M },
+                        { 83, 25.75M },
+                        { 97, 35.25M },};
+
+
+
+                public static void ComicMain()
+                {
+                    IEnumerable<Comic> mostExpensive =
+                    from comic in Comic.Catalog
+                    where Comic.Prices[comic.Issue] > 500
+                    orderby Comic.Prices[comic.Issue] descending
+                    select comic;
+                    foreach (Comic comic in mostExpensive)
+                    {
+                        Console.WriteLine($"{comic} is worth {Comic.Prices[comic.Issue]:c}");
+                    }
+                }
+
+            }//Fin de la class Comic
+
+        }//Fin de la class LINQ
+
     }//Fin de la class Disctionary
 
 }     //=====================================|| Fin du namespace ||======================================================//
 
 
-/*Exemple de Main Method avec un Dictionary
- * 
-Dictionary<string, string> favoriteFoods = new Dictionary<string, string>();
- favoriteFoods["Alex"] = "hot dogs";
- favoriteFoods["A'ja"] = "pizza";
- favoriteFoods["Jules"] = "falafel";
- favoriteFoods["Naima"] = "spaghetti";
- string name;
- while ((name = Console.ReadLine()) != "")
- {
- if (favoriteFoods.ContainsKey(name))
- Console.WriteLine($"{name}'s favorite food is {favoriteFoods[name]}");
- else
- Console.WriteLine($"I don't know {name}'s favorite food");
- } 
-*/
