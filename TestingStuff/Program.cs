@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
 
@@ -1112,7 +1113,7 @@ namespace TestingStuff
     {
         public static void ChooseCard()
         {
-            Console.WriteLine("Press 1 for EnumCard, 2 for CardsList");
+            Console.WriteLine("Press 1 for EnumCard, 2 for CardsList, 3 for CardLinq");
             Console.WriteLine("Any other key to quit");
             char cardKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (cardKey)
@@ -1124,6 +1125,10 @@ namespace TestingStuff
                 case '2':
                     Console.Clear();
                     CardsList.CardsListMain();
+                    break;
+                case '3':
+                    Console.Clear();
+                    CardLinq.CardLinqMain();
                     break;
                 default:
                     return;
@@ -1385,8 +1390,29 @@ namespace TestingStuff
 
         }//Fin de la class CardsList
 
-        class Card
+        class CardComparerByValue : IComparer<Card>
         {
+            public int Compare(Card x, Card y)
+            {
+                if (x.Suit < y.Suit)
+                    return -1;
+                if (x.Suit > y.Suit)
+                    return 1;
+                if (x.Value < y.Value)
+                    return -1;
+                if (x.Value > y.Value)
+                    return 1;
+                return 0;
+            }
+        }//Fin de la class CardComparerByValue
+
+        class Card : IComparable<Card>
+        {
+            public int CompareTo(Card other)
+            {
+                return new CardComparerByValue().Compare(this, other);
+            }
+
             public Values Value { get; private set; }
             public Suits Suit { get; private set; }
             public string Name { get { return $"{Value} of {Suit}"; } }
@@ -1421,7 +1447,80 @@ namespace TestingStuff
 
             }
 
+            public override string ToString()
+            {
+                return $"{Value} of {Suit}";
+            }
         }//Fin de la class Card
+
+        class Deck : ObservableCollection<Card>
+        {
+            private static Random random = new Random();
+            public Deck()
+            {
+                Reset();
+            }
+
+            public void Reset()
+            {
+                Clear();
+                for (int suit = 0; suit <= 3; suit++)
+                    for (int value = 1; value <= 13; value++)
+                        Add(new Card((Values)value, (Suits)suit));
+            }
+            public Card Deal(int index)
+            {
+                Card cardToDeal = base[index];
+                RemoveAt(index);
+                return cardToDeal;
+            }
+            public Deck Shuffle()
+            {
+                List<Card> copy = new List<Card>(this);
+                Clear();
+                while (copy.Count > 0)
+                {
+                    int index = random.Next(copy.Count);
+                    Card card = copy[index];
+                    copy.RemoveAt(index);
+                    Add(card);
+                }
+                return this;
+            }
+            public void Sort()
+            {
+                List<Card> sortedCards = new List<Card>(this);
+                sortedCards.Sort(new CardComparerByValue());
+                Clear();
+                foreach (Card card in sortedCards)
+                {
+                    Add(card);
+                }
+            }
+        }//Fin de la class Deck
+
+        class CardLinq
+        {
+            public static void CardLinqMain()
+            {
+                var deck = new Deck()
+                            .Shuffle()
+                            .Take(16);
+                var grouped =
+                from card in deck
+                group card by card.Suit into suitGroup
+                orderby suitGroup.Key descending
+                select suitGroup;
+                foreach (var group in grouped)
+                {
+                    Console.WriteLine(@$"Group: {group.Key}
+Count: {group.Count()}
+Minimum: {group.Min()}
+Maximum: {group.Max()}");
+                    Console.WriteLine("");
+                }
+            }
+        }//Fin de la class CardLinq
 
     }//Fin de la class Cards
 
