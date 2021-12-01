@@ -520,10 +520,7 @@ namespace TestingStuff
 
             public void Reload()
             {
-                if (balls > MagazineSize)
-                    BallsLoaded = MagazineSize;
-                else
-                    BallsLoaded = balls;
+                BallsLoaded = balls > MagazineSize ? MagazineSize : balls;
             }
 
             public bool Shoot()
