@@ -60,4 +60,15 @@
         browned,
         banana,
     }
+    //============================||Enum pour JimmyLinq||============================//
+    enum Critics
+    {
+        MuddyCritic,
+        RottenTornadoes,
+    }
+    enum PriceRange
+    {
+        Cheap,
+        Expensive,
+    }
 }//Fin du namespace

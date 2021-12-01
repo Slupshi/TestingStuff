@@ -12,7 +12,7 @@ namespace TestingStuff
         {
             Console.WriteLine("Press 1 to go on the Page 2, 2 for the SuperCalculator 3090Super, 3 for Tests Heritage");
             Console.WriteLine("Press 4 for Cards, 5 for LISTS, 6 for Pool Puzzles ");
-            Console.WriteLine("Press 7 for Dictionary, 8 for //, 9 for Test");
+            Console.WriteLine("Press 7 for Dictionary, 8 for Lambda, 9 for Test");
             Console.WriteLine("Press * to exit");
             char input = Console.ReadKey(true).KeyChar;
             if (input == '1') { Console.Clear(); SecondPage(); }
@@ -22,7 +22,7 @@ namespace TestingStuff
             else if (input == '5') { Console.Clear(); Lists.ChooseList(); }
             else if (input == '6') { Console.Clear(); PoolPuzzles(); }
             else if (input == '7') { Console.Clear(); Dictionary.ChooseDico(); }
-            else if (input == '8') { Console.Clear(); }
+            else if (input == '8') { Console.Clear(); Lambda.ChooseLambda(); }
             else if (input == '9') { Console.Clear(); }
 
             else if (input == '*') return;
@@ -1028,14 +1028,8 @@ namespace TestingStuff
 
     class TallGuy : IClown
     {
-        public string FunnyThingIHave
-        {
-            get { return "big shoes"; }
-        }
-        public void Honk()
-        {
-            Console.WriteLine("Honk honk!");
-        }
+        public string FunnyThingIHave => "big shoes"; // same as || get { return "big shoes"; } ||
+        public void Honk() => Console.WriteLine("Honk honk!");
 
         public static void TallGuyMethod()
         {
@@ -1456,10 +1450,7 @@ namespace TestingStuff
         class Deck : ObservableCollection<Card>
         {
             private static Random random = new Random();
-            public Deck()
-            {
-                Reset();
-            }
+            public Deck() => Reset();
 
             public void Reset()
             {
@@ -1503,21 +1494,28 @@ namespace TestingStuff
         {
             public static void CardLinqMain()
             {
-                var deck = new Deck()
-                            .Shuffle()
-                            .Take(16);
-                var grouped =
-                from card in deck
-                group card by card.Suit into suitGroup
-                orderby suitGroup.Key descending
-                select suitGroup;
-                foreach (var group in grouped)
+                while (true)
                 {
-                    Console.WriteLine(@$"Group: {group.Key}
+                    var deck = new Deck()
+                                .Shuffle()
+                                .Take(16);
+                    var grouped =
+                    from card in deck
+                    group card by card.Suit into suitGroup
+                    orderby suitGroup.Key descending
+                    select suitGroup;
+                    foreach (var group in grouped)
+                    {
+                        Console.WriteLine(@$"Group: {group.Key}
 Count: {group.Count()}
 Minimum: {group.Min()}
 Maximum: {group.Max()}");
-                    Console.WriteLine("");
+                        Console.WriteLine("");
+                    }
+                    Console.WriteLine("Press * to reroll, anything else to quit");
+                    char input = Console.ReadKey(true).KeyChar;
+                    if (input == '*') { Console.Clear(); }
+                    else return;
                 }
             }
         }//Fin de la class CardLinq
@@ -2014,6 +2012,7 @@ Maximum: {group.Max()}");
             public static void ChooseLinq()
             {
                 Console.WriteLine("Press 1 for TestLinq, 2 for Comic, 3 for MagnetsLinq");
+                Console.WriteLine("Press 4 for JimmyLinq");
                 Console.WriteLine("Any other key to quit");
                 char linqKey = Char.ToUpper(Console.ReadKey().KeyChar);
                 switch (linqKey)
@@ -2029,6 +2028,10 @@ Maximum: {group.Max()}");
                     case '3':
                         Console.Clear();
                         LinqFridge.MagnetsLinq();
+                        break;
+                    case '4':
+                        Console.Clear();
+                        JimmyLinq.JimmyMain();
                         break;
                     default:
                         return;
@@ -2120,9 +2123,161 @@ Maximum: {group.Max()}");
                 }
             }//Fin de la class LinqFridge
 
+            class JimmyLinq
+            {
+                public static readonly IEnumerable<Review> Reviews = new[] {
+                        new Review() { Issue = 36, Critic = Critics.MuddyCritic, Score = 37.6 },
+                        new Review() { Issue = 74, Critic = Critics.RottenTornadoes, Score = 22.8 },
+                        new Review() { Issue = 74, Critic = Critics.MuddyCritic, Score = 84.2 },
+                        new Review() { Issue = 83, Critic = Critics.RottenTornadoes, Score = 89.4 },
+                        new Review() { Issue = 97, Critic = Critics.MuddyCritic, Score = 98.1 },
+                        };
+
+                public static void JimmyMain()
+                {
+                    var done = false;
+                    while (!done)
+                    {
+                        Console.WriteLine(
+                        "\nPress G to group comics by price, R to get reviews, any other key to quit\n");
+                        switch (Console.ReadKey(true).KeyChar.ToString().ToUpper())
+                        {
+                            case "G":
+                                done = GroupComicsByPrice();
+                                break;
+                            case "R":
+                                done = GetReviews();
+                                break;
+                            default:
+                                done = true;
+                                break;
+                        }
+                    }
+                }
+
+                private static bool GroupComicsByPrice()
+                {
+                    var groups = ComicAnalyzer.GroupComicsByPrice(Comic.Catalog, Comic.Prices);
+                    foreach (var group in groups)
+                    {
+                        Console.WriteLine($"{group.Key} comics:");
+                        foreach (var comic in group)
+                            Console.WriteLine($"#{comic.Issue} {comic.Name}: {Comic.Prices[comic.Issue]:c}");
+                    }
+                    return false;
+                }
+
+                private static bool GetReviews()
+                {
+                    var reviews = ComicAnalyzer.GetReviews(Comic.Catalog, Reviews);
+                    foreach (var review in reviews)
+                        Console.WriteLine(review);
+                    return false;
+                }
+
+                public class Review
+                {
+                    public int Issue { get; set; }
+                    public Critics Critic { get; set; }
+                    public double Score { get; set; }
+
+                }//Fin de la class Review
+
+                static class ComicAnalyzer
+                {
+                    private static PriceRange CalculatePriceRange(Comic priceRange)
+                    {
+                        if (Comic.Prices[priceRange.Issue] < 100) return PriceRange.Cheap;
+                        else return PriceRange.Expensive;
+                    }
+
+                    public static IEnumerable<IGrouping<PriceRange, Comic>> GroupComicsByPrice(IEnumerable<Comic> comics, IReadOnlyDictionary<int, decimal> prices)
+                    {
+                        var grouped =
+                        from comic in comics
+                        orderby prices[comic.Issue]
+                        group comic by CalculatePriceRange(comic) into priceGroup
+                        select priceGroup;
+                        return grouped;
+
+
+
+                    }
+                    public static IEnumerable<string> GetReviews(IEnumerable<Comic> comics, IEnumerable<Review> reviews)
+                    {
+                        var joined =
+                        from comic in comics
+                        orderby comic.Issue
+                        join review in reviews
+                        on comic.Issue equals review.Issue
+
+                        select $"{review.Critic} rated #{comic.Issue} '{comic.Name}' {review.Score:0.00}";
+                        return joined;
+                    }
+
+                }//Fin de la static class ComicAnalyzer
+
+            }//Fin de la class JimmyLinq
+
         }//Fin de la class LINQ
 
     }//Fin de la class Disctionary
+
+    //===============================================================================//
+    //                                  Lambda                                       //
+    //===============================================================================//
+
+    class Lambda
+    {
+        public static void ChooseLambda()
+        {
+            Console.WriteLine("Press 1 LambdaDrive");
+            Console.WriteLine("Any other key to quit");
+            char lambdaKey = Char.ToUpper(Console.ReadKey().KeyChar);
+            switch (lambdaKey)
+            {
+                case '1':
+                    Console.Clear();
+                    LambdaDrive.DriveMain();
+                    break;
+                case '2':
+                    Console.Clear();
+
+                    break;
+                case '3':
+                    Console.Clear();
+
+                    break;
+                default:
+                    return;
+            }
+        }
+
+        class LambdaDrive
+        {
+            static Random random => new Random();
+            static double GetRandomDouble(int max) => max * random.NextDouble();
+            static void PrintValue(double d) => Console.WriteLine($"The value is {d:0.0000}");
+
+            public static void DriveMain()
+            {
+                Console.WriteLine("Press * to quit or anything else to rerun\n");
+                while (true)
+                {
+                    var value = LambdaDrive.GetRandomDouble(100);
+                    LambdaDrive.PrintValue(value);
+
+                    char input = Char.ToUpper(Console.ReadKey().KeyChar);
+                    if (input == '*') return;
+                }
+            }
+
+        }//Fin de la class LambdaDrive
+
+
+
+    }//Fin de la class Lambda
+
 
 }     //=====================================|| Fin du namespace ||======================================================//
 
