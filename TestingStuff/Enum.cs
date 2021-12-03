@@ -71,4 +71,6 @@
         Cheap,
         Expensive,
     }
+    //============================||Enum pour ManualSportSequence||============================//
+    enum Sport { Football, Baseball, Basketball, Hockey, Boxing, Rugby, Fencing }
 }//Fin du namespace

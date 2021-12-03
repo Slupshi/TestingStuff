@@ -29,7 +29,16 @@ namespace TestingStuff
                         {
                             Console.WriteLine(
                             "\nPress G to group comics by price, R to get reviews, any other key to quit\n");
-                            switch (Console.ReadKey(true).KeyChar.ToString().ToUpper())
+
+                            var readKey = Console.ReadKey(true).KeyChar.ToString().ToUpper();
+                            done = readKey switch
+                            {
+                                "G" => GroupComicsByPrice(),
+                                "R" => GetReviews(),
+                                _ => true,
+                            };
+
+                            /*switch (Console.ReadKey(true).KeyChar.ToString().ToUpper())
                             {
                                 case "G":
                                     done = GroupComicsByPrice();
@@ -40,7 +49,7 @@ namespace TestingStuff
                                 default:
                                     done = true;
                                     break;
-                            }
+                            }*/
                         }
                     }
 
@@ -82,26 +91,41 @@ namespace TestingStuff
 
                         public static IEnumerable<IGrouping<PriceRange, Comic>> GroupComicsByPrice(IEnumerable<Comic> comics, IReadOnlyDictionary<int, decimal> prices)
                         {
-                            var grouped =
-                            from comic in comics
+                            var grouped = comics
+                                .OrderBy(comic => prices[comic.Issue])
+                                .GroupBy(comic => CalculatePriceRange(comic));
+                            return grouped;
+
+                            /*from comic in comics
                             orderby prices[comic.Issue]
                             group comic by CalculatePriceRange(comic) into priceGroup
                             select priceGroup;
-                            return grouped;
+                            return grouped;*/
 
 
 
                         }
                         public static IEnumerable<string> GetReviews(IEnumerable<Comic> comics, IEnumerable<Review> reviews)
                         {
-                            var joined =
-                            from comic in comics
+                            var joined = comics
+                                .OrderBy(comic => comic.Issue)
+                                .Join(
+                                reviews, 
+                                comic => comic.Issue, 
+                                review => review.Issue, 
+                                (comic, review) => $"{review.Critic} rated #{comic.Issue} '{comic.Name}' {review.Score:0.00}");
+                            return joined;
+
+
+
+
+                            /*from comic in comics
                             orderby comic.Issue
                             join review in reviews
                             on comic.Issue equals review.Issue
 
                             select $"{review.Critic} rated #{comic.Issue} '{comic.Name}' {review.Score:0.00}";
-                            return joined;
+                            return joined;*/
                         }
 
                     }//Fin de la static class ComicAnalyzer
@@ -110,6 +134,7 @@ namespace TestingStuff
 
             }
         }
-    }}     //=====================================|| Fin du namespace ||======================================================//
+    }
+}     //=====================================|| Fin du namespace ||======================================================//
 
 

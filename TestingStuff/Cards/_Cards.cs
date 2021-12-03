@@ -13,6 +13,7 @@ namespace TestingStuff
             public static void ChooseCard()
             {
                 Console.WriteLine("Press 1 for EnumCard, 2 for CardsList, 3 for CardLinq");
+                Console.WriteLine("Press 4 for SwitchLambda");
                 Console.WriteLine("Any other key to quit");
                 char cardKey = Char.ToUpper(Console.ReadKey().KeyChar);
                 switch (cardKey)
@@ -29,6 +30,10 @@ namespace TestingStuff
                         Console.Clear();
                         CardLinq.CardLinqMain();
                         break;
+                    case '4':
+                        Console.Clear();
+                        SwitchLambdaMain();
+                        break;
                     default:
                         return;
                 }
@@ -36,6 +41,7 @@ namespace TestingStuff
 
         }//Fin de la class Cards
 
-    }}     //=====================================|| Fin du namespace ||======================================================//
+    }
+}     //=====================================|| Fin du namespace ||======================================================//
 
 
