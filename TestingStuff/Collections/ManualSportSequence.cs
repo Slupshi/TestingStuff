@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace TestingStuff.Collections
@@ -30,6 +31,15 @@ namespace TestingStuff.Collections
         }
         public void Reset() { current = 0; }
     }
+    /*
+     * var sports = new ManualSportSequence();
+        foreach (var sport in sports)
+        Console.WriteLine(sport);
+     * */
+
+
+
+
     //=============================================================================================//
     class BetterSportSequence : IEnumerable<Sport>
     {
@@ -45,8 +55,32 @@ namespace TestingStuff.Collections
         {
             return GetEnumerator();
         }
-    }
+        public Sport this[int index]
+        {
+            get => (Sport)index;
 
+        }
+    }
+    //=============================================================================================//
+    class PowerOfTwo : IEnumerable<int>
+    {
+        public IEnumerator<int> GetEnumerator()
+        {
+            var maxInt = Math.Round(Math.Log(int.MaxValue, 2));
+            for (int i = 0; i < maxInt; i++)
+            {
+                yield return (int)Math.Pow(2, i);
+            }
+        }
+
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
+        /*
+         * var power2 = new PowerOfTwo();
+                foreach (var power in power2)
+                    Console.WriteLine(power);
+         */
+
+    }
 
 
 
