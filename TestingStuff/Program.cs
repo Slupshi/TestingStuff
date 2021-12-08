@@ -8,7 +8,7 @@ namespace TestingStuff
         {
             Console.WriteLine("Press 1 to go on the Page 2, 2 for the SuperCalculator 3090Super, 3 for Tests Heritage");
             Console.WriteLine("Press 4 for Cards, 5 for Collections, 6 for Pool Puzzles ");
-            Console.WriteLine("Press 7 for //, 8 for Lambda, 9 for //");
+            Console.WriteLine("Press 7 for Stream, 8 for Lambda, 9 for //");
             Console.WriteLine("Press * to exit");
             char input = Console.ReadKey(true).KeyChar;
             if (input == '1') { Console.Clear(); SecondPage(); }
@@ -17,7 +17,7 @@ namespace TestingStuff
             else if (input == '4') { Console.Clear(); Cards.ChooseCard(); }
             else if (input == '5') { Console.Clear(); PageCollection(); }
             else if (input == '6') { Console.Clear(); PoolPuzzles(); }
-            else if (input == '7') { Console.Clear(); }
+            else if (input == '7') { Console.Clear(); Stream.ChooseStream(); }
             else if (input == '8') { Console.Clear(); Lambda.ChooseLambda(); }
             else if (input == '9') { Console.Clear(); }
 
@@ -27,7 +27,7 @@ namespace TestingStuff
 
         private static void PoolPuzzles()
         {
-            Console.WriteLine("Press 1 for the Maths Quizz, 2 for the ClownShit");
+            Console.WriteLine("Press 1 for the Maths Quizz, 2 for the ClownShit, 3 for PineapplePizza");
             Console.WriteLine("Any other key to quit");
             char poolKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (poolKey)
@@ -39,6 +39,10 @@ namespace TestingStuff
                 case '2':
                     Console.Clear();
                     Clown.Clown16();
+                    break;
+                case '3':
+                    Console.Clear();
+                    PineapplePizza.PizzaFun();
                     break;
                 default:
                     return;
