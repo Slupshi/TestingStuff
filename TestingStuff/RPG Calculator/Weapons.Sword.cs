@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using TestingStuff.Utility;
 
 namespace TestingStuff
 {
@@ -50,14 +51,8 @@ namespace TestingStuff
                         else if (input == 'n' || input == 'N') { ironSword.Flaming = false; Console.WriteLine("Your sword is not Flaming"); }
 
                         else return;
-                        Console.WriteLine("Calculating your damages");
-                        Thread.Sleep(300);
-                        Console.WriteLine("Calculating your damages .");
-                        Thread.Sleep(300);
-                        Console.WriteLine("Calculating your damages ..");
-                        Thread.Sleep(300);
-                        Console.WriteLine("Calculating your damages ...");
-                        Thread.Sleep(300);
+                        Console.Write("Calculating your damages ");
+                        Utilities.LoadingDots();
                         Console.WriteLine("The dices rolled " + ironSword.Roll + " for a total of " + ironSword.Damage + " HP");
                         Console.WriteLine("Press Q to quit, any other key to continue");
                         input = Console.ReadKey(true).KeyChar;
@@ -68,6 +63,8 @@ namespace TestingStuff
                     }
 
                 }
+
+
             }//Fin de la Class Sword//
         }
     }

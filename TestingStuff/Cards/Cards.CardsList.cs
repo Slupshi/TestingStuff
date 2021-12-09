@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading;
+using TestingStuff.Utility;
 
 namespace TestingStuff
 {
@@ -35,14 +36,8 @@ namespace TestingStuff
                             Thread.Sleep(200);
                             int loadingTimeCard = numberOfCards * 30;
                             if (numberOfCards == 1) { Console.Write($"\nPeeking {numberOfCards} random card"); }
-                            else { Console.Write($"\nPeeking {numberOfCards} random cards"); }
-                            Thread.Sleep(loadingTimeCard);
-                            Console.Write(" .");
-                            Thread.Sleep(loadingTimeCard);
-                            Console.Write(".");
-                            Thread.Sleep(loadingTimeCard);
-                            Console.Write(".");
-                            Thread.Sleep(loadingTimeCard);
+                            else { Console.Write($"\nPeeking {numberOfCards} random cards "); }
+                            Utilities.LoadingDots(loadingTimeCard);
                             Console.WriteLine("\nHere are your cards !\n");
                             Thread.Sleep(300);
                             CreateCardsList(numberOfCards);
@@ -264,6 +259,7 @@ namespace TestingStuff
             }//Fin de la class CardsList
 
         }
-    }}     //=====================================|| Fin du namespace ||======================================================//
+    }
+}     //=====================================|| Fin du namespace ||======================================================//
 
 
