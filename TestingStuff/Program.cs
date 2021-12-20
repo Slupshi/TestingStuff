@@ -53,6 +53,7 @@ namespace TestingStuff
         {
             Console.WriteLine("Page 2 :");
             Console.WriteLine("Press 1 for Elephant, 2 for Hilo Game, 3 for PaintBallGun");
+            Console.WriteLine("Press 4 for CaptainAmazing");
             Console.WriteLine("Any other key to quit");
             char secondKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (secondKey)
@@ -68,6 +69,10 @@ namespace TestingStuff
                 case '3':
                     Console.Clear();
                     MachineGun.PaintballGun();
+                    break;
+                case '4':
+                    Console.Clear();
+                    CaptainAmazing.CaptainAmazingMain();
                     break;
                 default:
                     return;
