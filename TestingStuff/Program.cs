@@ -1,4 +1,5 @@
 ﻿using System;
+using TestingStuff.Utility;
 
 namespace TestingStuff
 {
@@ -28,6 +29,7 @@ namespace TestingStuff
         private static void PoolPuzzles()
         {
             Console.WriteLine("Press 1 for the Maths Quizz, 2 for the ClownShit, 3 for PineapplePizza");
+            Console.WriteLine("Press 4 for Table");
             Console.WriteLine("Any other key to quit");
             char poolKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (poolKey)
@@ -43,6 +45,11 @@ namespace TestingStuff
                 case '3':
                     Console.Clear();
                     PineapplePizza.PizzaFun();
+                    break;
+                case '4':
+                    Console.Clear();
+                    TablePuzzle.TableMain();
+                    Utilities.WaitToClose();
                     break;
                 default:
                     return;

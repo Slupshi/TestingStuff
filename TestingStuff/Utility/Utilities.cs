@@ -34,8 +34,10 @@ namespace TestingStuff.Utility
             Console.WriteLine();
         }
 
-
-
+        /// <summary>
+        /// Wait 5s before automatically close the consol app 
+        /// </summary>
+        public static void WaitToClose() => Thread.Sleep(5000);
 
     }
 }
