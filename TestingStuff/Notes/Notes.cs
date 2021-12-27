@@ -1,6 +1,8 @@
-﻿namespace TestingStuff.Notes
+﻿using AmazingExtensions;
+
+namespace TestingStuff.Notes
 {
-    class Notes
+    class Notes1
     {
         //Si on veut out une variable il faut lui attribuer une valeur avant de return
         public static int ReturnThreeValues(int value, out double half, out int twice)
@@ -45,7 +47,30 @@
         //On peut convertir les variable Nullable dans variable standard : int? myNullableInt = 9321; -> int = myNullableInt.Value;
 
 
+    }
 
+    //Une class 'sealed' ne peut pas être hérité mais on peut lui rajouter une méthode avec une class | ex :
+    sealed class OrdinaryHuman { }
+    static class AmazeballsSerum
+    {
+        public static string BreakWalls(this OrdinaryHuman h, double wallDensity)
+        {
+            return ($"I broke through a wall of {wallDensity} density.");
+        }
+    }
+    //Extension methode doit être static et dans une static class qui n'est pas nested
+    //On peut extend une interface ex : Linq qui extend IEnumerable<T>
+    //Il faut éviter d'extend || C'est utile lorsqu'on veut modif le comportement de qq chose fournie avec .NET Framework ou autres trucs dans ce style
+    class Notes12
+    {
+        //Exemple Extand la class string :
+        private static void ExtendStringExample()
+        {
+            string message = "Evil clones are wreaking havoc. Help!";
+            message.IsDistressCall(); //using AmazingExtensions
+        }
+
+        //Toutes les Exception héritent de System.Exception
 
 
 

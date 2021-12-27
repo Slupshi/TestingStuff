@@ -60,7 +60,7 @@ namespace TestingStuff
         {
             Console.WriteLine("Page 2 :");
             Console.WriteLine("Press 1 for Elephant, 2 for Hilo Game, 3 for PaintBallGun");
-            Console.WriteLine("Press 4 for CaptainAmazing");
+            Console.WriteLine("Press 4 for CaptainAmazing, 5 for ExtensionMagnets");
             Console.WriteLine("Any other key to quit");
             char secondKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (secondKey)
@@ -80,6 +80,11 @@ namespace TestingStuff
                 case '4':
                     Console.Clear();
                     CaptainAmazing.CaptainAmazingMain();
+                    break;
+                case '5':
+                    Console.Clear();
+                    ExtensionMagnet.ExtensionMagMain();
+                    Utilities.WaitToClose();
                     break;
                 default:
                     return;
