@@ -29,7 +29,7 @@ namespace TestingStuff
         private static void PoolPuzzles()
         {
             Console.WriteLine("Press 1 for the Maths Quizz, 2 for the ClownShit, 3 for PineapplePizza");
-            Console.WriteLine("Press 4 for Table");
+            Console.WriteLine("Press 4 for Table, 5 for Kangaroo");
             Console.WriteLine("Any other key to quit");
             char poolKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (poolKey)
@@ -51,6 +51,11 @@ namespace TestingStuff
                     TablePuzzle.TableMain();
                     Utilities.WaitToClose();
                     break;
+                case '5':
+                    Console.Clear();
+                    KangarooPuzzle.KangarooMain();
+                    Utilities.WaitToClose();
+                    break;
                 default:
                     return;
             }
@@ -60,7 +65,7 @@ namespace TestingStuff
         {
             Console.WriteLine("Page 2 :");
             Console.WriteLine("Press 1 for Elephant, 2 for Hilo Game, 3 for PaintBallGun");
-            Console.WriteLine("Press 4 for CaptainAmazing, 5 for ExtensionMagnets");
+            Console.WriteLine("Press 4 for CaptainAmazing, 5 for ExtensionMagnets, 6 for ExceptionMagnets");
             Console.WriteLine("Any other key to quit");
             char secondKey = Char.ToUpper(Console.ReadKey().KeyChar);
             switch (secondKey)
@@ -84,6 +89,11 @@ namespace TestingStuff
                 case '5':
                     Console.Clear();
                     ExtensionMagnet.ExtensionMagMain();
+                    Utilities.WaitToClose();
+                    break;
+                case '6':
+                    Console.Clear();
+                    ExceptionMagnet.ExceptionMagnetMain();
                     Utilities.WaitToClose();
                     break;
                 default:

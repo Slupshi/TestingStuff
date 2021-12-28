@@ -71,6 +71,21 @@ namespace TestingStuff.Notes
         }
 
         //Toutes les Exception héritent de System.Exception
+    }
+
+    class Notes2
+    {
+        // On peut ajouter un bloc 'finally' après les blocs 'try' et 'catch' pour avoir un code qui s'éxecute obligatoirement qq soit le résultat du try catch
+        // On peut enchainer les bloc 'catch' pour avoir un résultat différent en fonction de chaque erreur
+
+        // Voici comment créer une exception custom :
+        class CustomException : System.Exception
+        {
+            public CustomException(string message) : base(message) { }
+        }
+
+        // Pour catch une exception uniquement dans certaines conditions on utilise le keyword 'when' 
+        // ex : catch(CustomException) when (Ennui == "total")
 
 
 
