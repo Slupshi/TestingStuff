@@ -25,52 +25,17 @@
         Queen = 12,
         King = 13,
     }
-    enum CardSortCriteria
-    {
-        SuitThenValue,
-        ValueThenSuit,
-    }
+    enum CardSortCriteria { SuitThenValue, ValueThenSuit, }
     //============================||Enum pour Shoes||============================//
-    enum Style
-    {
-        Sneaker,
-        Loafer,
-        Sandal,
-        Flipflop,
-        Wingtip,
-        Clog,
-    }
+    enum Style { Sneaker, Loafer, Sandal, Flipflop, Wingtip, Clog, }
     //============================||Enum pour Duck||============================//
-    enum KindOfDuck
-    {
-        Mallard,
-        Muscovy,
-        Loon,
-    }
-    enum DuckSortCriteria
-    {
-        SizeThenKind,
-        KindThenSize,
-    }
+    enum KindOfDuck { Mallard, Muscovy, Loon, }
+    enum DuckSortCriteria { SizeThenKind, KindThenSize, }
     //============================||Enum pour LumberJack||============================//
-    enum FlapJack
-    {
-        crispy,
-        soggy,
-        browned,
-        banana,
-    }
+    enum FlapJack { crispy, soggy, browned, banana, }
     //============================||Enum pour JimmyLinq||============================//
-    enum Critics
-    {
-        MuddyCritic,
-        RottenTornadoes,
-    }
-    enum PriceRange
-    {
-        Cheap,
-        Expensive,
-    }
+    enum Critics { MuddyCritic, RottenTornadoes, }
+    enum PriceRange { Cheap, Expensive, }
     //============================||Enum pour ManualSportSequence||============================//
     enum Sport { Football, Baseball, Basketball, Hockey, Boxing, Rugby, Fencing }
 
